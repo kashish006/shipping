@@ -1,0 +1,978 @@
+<% include header %>
+<head>
+    
+    
+    
+</head>
+<div id="wrapper">
+
+    <% include navigation %>
+    
+    <div id="page-wrapper">
+        <% if(success && success!=''){ %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+        <% }
+        else if(error && error!=''){ %>
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+        <% }else{ %>
+            <br>
+        <% } %>
+        <div class="alert alert-success" style="display:none" role="alert"></div>
+        <div class="alert alert-danger" style="display:none" role="alert"></div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Add Shipment</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Please fill below details
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-lg-10">
+                                <form role="form" action="/shipment/post" method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label>Shipment Name</label>
+                                        <input name="name" class="form-control" id="shipment_name">
+                                    </div> 
+
+                                    <div class="form-group" >
+                                        <input type="checkbox" value="false" id="is_orphan" name="is_orphan">&nbsp;&nbsp;&nbsp;
+                                        <label for="manual">Is Orphan</label>
+                                    </div> 
+
+                                    <div class="form-group" id="for_journey">
+                                        <label>For Journey</label>
+                                        <select class="form-control" name="for_journey" id = "journey">
+                                            <option value="">-Select-</options>
+                                                <%
+                                                for (var obj in journeylist){
+                                                %>
+                                                    <option value="<%- journeylist[obj]._id %>"><%- journeylist[obj].name  %></option>    
+                                                <%
+                                                }  
+                                                %>
+                                        </select>
+                                    </div> 
+
+                                    <div class="form-group" id="sender">
+                                        <label>Sender</label>
+                                        <select class="form-control" name="sender" id="sender_name">
+                                            <option value="">-Select-</options>
+                                            <%
+                                            for (var obj in customerlist){
+                                            %>
+                                                <option value="<%- customerlist[obj]._id %>"><%- customerlist[obj].auto_generated_id  %></option>    
+                                            <%
+                                            }  
+                                            %>
+                                        </select>
+                                    </div>
+                                    <br/>
+                                    <div class="form-group" >
+                                        <input type="checkbox" value="false" id="is_sender" name="is_sender">&nbsp;&nbsp;&nbsp;
+                                        <label for="manual">Is Receiver same as sender</label>
+                                    </div> 
+
+                                    <div class="form-group" id="for_receiver">
+                                    <legend>Receiver Details</legend>
+                                    <div class="form-group">
+                                        <label>Name</label>
+                                        <input name="receiver_name" class="form-control">
+                                    </div> 
+                                    <div class="form-group" id = "contact_number">
+                                        <label>Contact Number</label>
+                                        <input type="contact" name="receiver_contact" class="form-control">
+                                    </div> 
+
+                                    <div class="form-group">
+                                        <label>Receiver's Address</label>
+                                    </div> 
+                                      <!-- Text input-->
+                                      <div class="form-group">
+                                        <label>Address Line 1</label>
+                                          <input type="text" name="receiver_address_line1" placeholder="Address Line 1" class="form-control">
+                                      </div>
+
+                                      <!-- Text input-->
+                                      <div class="form-group">
+                                        <label>Address Line 2</label>
+                                        <input type="text" name="receiver_address_line2" placeholder="Address Line 2" class="form-control">
+                                      </div>
+
+                                      <!-- Text input-->
+                                      <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
+                                        <label>City</label>
+                                        <input type="text" name="receiver_address_city" placeholder="City" class="form-control">
+                                      </div>
+                                      
+                                      <!-- Text input-->
+                                      <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
+                                        <label>State</label>
+                                        <input type="text" name="receiver_address_state" placeholder="State" class="form-control">
+                                      </div>
+
+                                      <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
+                                        <label>Zip</label>  
+                                        <input type="text" name="receiver_address_zip" placeholder="Zip" class="form-control">
+                                      </div>
+                                    <legend></legend>
+                                </div>
+<!------------------------------------------------------------------------------------------------------>
+                           
+                                    <legend>Cargo Details</legend>
+                                    <div class="form-group" id="testDiv-0">
+                                        
+                                        <div class="form-group">
+                                            <label>Cargo Type</label>
+                                            <select class="selectpicker form-control" id="type-0" onChange="createShipmentType(this.id)" name="cargos[0].type">
+                                                <option value="">-Type-</options>
+                                                <option>Fruits</options>
+                                                <option>Smartphones</options>
+                                                <option>Vehicle</options>
+                                                <option>Bikes</options>
+                                                <option>Others</options>    
+                                            </select>
+                                        </div> 
+
+                                        <div class="form-group" >
+                                            
+                                            <input id="main_type-0" name="cargos[0].main_type" placeholder="Cargo Type"  class="form-control" style="display:none">
+                                        </div> 
+                                        
+                                        <div class="form-group">
+                                            <select class="selectpicker form-control" id="subtype-0" name="cargos[0].subtype" onChange="isOtherSelectedForSubType1(this.id)">
+                                                <option value="">-SubType-</options >
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group"  >
+                                            
+                                            <input id="sub_type-0" name="cargos[0].sub_type" placeholder="Cargo Sub-Type"  class="form-control" style="display:none">
+                                        </div> 
+                                        
+                                        <div class="form-group">
+                                            <select class="selectpicker form-control" width= '100px' id="sub_subtype-0" name="cargos[0].sub_subtype" onChange="isOtherSelectedForSubType2(this.id)">
+                                                <option value="">-SubSubType-</options>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group"  >
+                                            
+                                            <input id="sub_sub_type-0" name="cargos[0].sub_sub_type" placeholder="Cargo Sub-Type"  class="form-control" style="display:none">
+                                        </div> 
+
+                                        <div class="form-group">
+                                            <label>Expected Minimum Cost Par/Piece</label>
+                                            <div class="form-group input-group">
+                                                <input type="text" id="shipment_cost-0" name="cargos[0].shipment_cost" class="form-control">
+                                                <span class="input-group-addon">.00</span>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group VINumber" id="VINdiv-0">
+                                            <label>Vehicle Identification Number (VIN)</label>
+                                            <input type="text" id="vehicle_id_no-0" name="cargos[0].vehicle_id_no" placeholder="Vehicle Identification Num" class="form-control">
+                                            <button type="button" id="searchVINbtn-0" onclick="checkVIN(this.id)" class="btn btn-default">Go</button>
+                                        </div>
+
+                                        <div class="form-group VIDetails" id="vinDetailsDiv-0">
+                                        <hr/>
+                                            <label>VIN Search Result</label><br/>
+                                            
+                                            <label>VIN Status</label>
+                                            <input type="text" id="vin_error-0" name="cargos[0].vin_error" class="form-control">
+                                            
+                                            <label>Vehicle Make</label>
+                                            <input type="text" id="vin_make-0" name="cargos[0].vin_make" class="form-control">
+
+                                            <label>Vehicle Manufacturer Name</label>
+                                            <input type="text" id="vin_manufacturer-0" name="cargos[0].vin_manufacturer" class="form-control">
+                                            
+                                            <label>Vehicle Model</label>
+                                            <input type="text" id="vin_model-0" name="cargos[0].vin_model" class="form-control">
+                                            
+                                            <label>Vehicle Make Year</label>
+                                            <input type="text" id="vin_modelyear-0" name="cargos[0].vin_modelyear" class="form-control">
+
+                                            <label>Inspection Fee</label>
+                                            <input type="number" id="inspection_fee-0" name="cargos[0].inspection_fee" class="form-control">
+                                        <hr/>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Value Addition in Cost</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="value_added[0]" name="cargos[0].value_added" >
+                                             </div>
+                                        </div>
+
+                                        <!-- <div class="form-group">
+                                            <label>Inspection Fee</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="cargo.inspection_fee[0]" name="cargos[0].inspection_fee" >
+                                                </div>
+                                        </div> -->
+
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="cargo.quantity[0]" name="cargos[0].quantity" >
+                                                <input type="hidden" id="cargo.barcode[0]" name="cargos[0].barcode" >
+                                                 
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                             <button type="button" style="color: #337ab7" class="btn btn-default addButton" onclick="addprizes(this)"><i class="fa fa-plus"></i> Cargo</button>
+                                         
+                                        </div>
+                                    </div>
+                                    <input type='button' style="color: #337ab7" class="btn btn-default" id='hideshow-0' value='hide/show' onClick="hideButton(this.id)">
+                                    <hr/>
+                                    <!-------------------------------------------------------------->
+
+                                    <div class="form-group hide" id="cargoForm">
+                                        <div class="form-group" id="testDiv">
+                                        <div class="form-group">
+                                            <label>Cargo Type</label>
+                                            <select class="selectpicker form-control" id="type" onChange="createShipmentType(this.id)" name="type">
+                                                <option value="">-Type-</options>
+                                                <option>Smartphones</options>
+                                                <option>Fruits</options>
+                                                <option>Vehicle</options>
+                                                <option>Bikes</options>
+                                                <option>Others</options>    
+                                            </select>
+                                        </div> 
+
+                                        <div class="form-group" id="main_type" style="display:none">
+                                            
+                                            <input name="main_type" placeholder="Cargo Type"  class="form-control">
+                                        </div> 
+
+
+                                        <div class="form-group">
+                                            <select class="selectpicker form-control" id="subtype" name="subtype">
+                                                <option value="">-SubType-</options>
+                                            </select>
+                                        </div>
+
+                                        <div class="form-group" id="sub_type" style="display:none">
+                                            
+                                            <input name="sub_type" placeholder="Cargo Sub-Type"  class="form-control">
+                                        </div> 
+
+                                        <div class="form-group">
+                                            <select class="selectpicker form-control" width= '100px' id="sub_subtype" name="sub_subtype">
+                                                <option value="">-Sub-SubType-</options>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="form-group" id="sub_sub_type" style="display:none">
+                                            
+                                            <input name="sub_sub_type" placeholder="Cargo Sub-Type"  class="form-control">
+                                        </div> 
+
+
+                                        <div class="form-group">
+                                            <label>Expected Minimum Cost Par/Piece</label>
+                                            <div class="form-group input-group">
+                                                <input type="text" id="shipment_cost" name="shipment_cost"  class="form-control">
+                                                <span class="input-group-addon">.00</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group VINumber" id="VINdiv">
+                                            <label>Vehical Identification Number</label>
+                                            <input type="text" id="vehicle_id_no" name="VIN_text" placeholder="Vehicle Identification Num" class="form-control">
+                                            <button type="button" id="searchVINbtn" onclick="checkVIN(this.id)" class="btn btn-default">Go</button>
+                                        </div>
+
+                                        <div class="form-group VINumber" id="vinDetailsDiv">
+                                        <hr/>
+                                            <label>VIN Search Result</label>
+                                            
+                                            <label>VIN Status</label>
+                                            <input type="text" id="vin_error" name="vin_error" class="form-control">
+                                            
+                                            <label>Vehicle Make</label>
+                                            <input type="text" id="vin_make" name="vin_make" class="form-control">
+
+                                            <label>Vehicle Manufacturer Name</label>
+                                            <input type="text" id="vin_manufacturer" name="vin_manufacturer" class="form-control">
+                                            
+                                            <label>Vehicle Model</label>
+                                            <input type="text" id="vin_model" name="vin_model" class="form-control">
+                                            
+                                            <label>Vehicle Make Year</label>
+                                            <input type="text" id="vin_modelyear" name="vin_modelyear" class="form-control">
+
+                                            <label>Inspection Fee</label>
+                                            <input type="number" id="inspection_fee" name="inspection_fee" class="form-control">
+                                        <hr/>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Value Addition in Cost</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="cargo.value_added" name="value_added" >
+                                            </div>
+                                        </div>
+
+                                        <!-- <div class="form-group">
+                                            <label>Inspection Fee</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="cargo.inspection_fee" name="inspection_fee" >
+                                            </div>
+                                        </div> -->
+
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            <div class="form-group input-group">
+                                                <input type="number" id="cargo.quantity" name="quantity" >
+                                                <input type="hidden" id="cargo.barcode" name="barcode" >
+                                                </div>
+                                        </div>
+                                        <div class="form-group">
+                                             <button type="button" style="color: #337ab7" class="btn btn-default addButton" onclick="addprizes(this)"><i class="fa fa-plus"></i> Cargo</button>
+                                         
+                                              <button type="button" style="color: #337ab7" class="btn btn-default removeButton" onclick="removeprizes(this)"><i class="fa fa-minus"></i> Cargo</button>
+                                        </div>
+                                      <hr/>
+                                    </div>
+                                </div>
+                                    <div class = "form-group" id = "hideShowbutton">
+                                        <input type='button' style="color: #337ab7; display:none" class="btn btn-default" id='hideshow' value='hide/show' onClick="hideButton(this.id)">
+                                    </div>
+                                    
+                                     <div class="form-group">
+                                             <button type="button" style="color: #337ab7" class="btn btn-default addButton " onclick="addprizes(this)"><i class="fa fa-plus"></i>Add Cargo</button>
+											
+                                        </div>
+                                  
+                                    <hr/>
+                                    
+                              <div class="modal fade" id="otherss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+											<div class="modal-dialog" style="width:1000px">
+												<div class="modal-content">
+													<div class="modal-header">
+														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+														 <h4 class="modal-title" id="myModalLabel">Invoice</h4>
+
+													</div>
+													<div class="modal-body">
+                                                                                                            
+                                                                                                            <div id="page-wrap">
+
+                                                                    
+                                                                    
+                                                                    <div id="identity">
+                                                                    
+                                                                <p id="address"><b>Harkham Shipping LLC <br />
+                                                                Miami-Miragoane, Haiti
+                                                                
+                                                                954-998-3505</b></p>
+                                                    
+                                                                <div id="logo">
+                                                    
+                                                                  
+                                                    
+                                                                  <div id="logohelp">
+                                                                    <input id="imageloc" type="text" size="50" value="" /><br />
+                                                                    (max width: 540px, max height: 100px)
+                                                                  </div>
+                                                                  <img id="image" src="../images/logo.png" alt="logo" />
+                                                                </div>
+                                                                    
+                                                                    </div>
+                                                                    
+                                                                    <div style="clear:both"></div>
+                                                                    
+                                                                    <div id="customer">
+                                                    
+                                                                <p id="customer-title"></p><br />
+                                                               <b>Journey:<p id ="journeys"></p></b></b><br />
+                                                              <b>  Sender:<p id="senders"></p></b> <br />
+                                                                <b> Reciever:<p id = "recievers"></p></b> 
+                                                    
+                                                                <table id="meta">
+                                                                    <tr>
+                                                                        <td class="meta-head">Invoice #</td>
+                                                                        <td><p>000123</p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                    
+                                                                        <td class="meta-head">Date</td>
+                                                                        <td><p id="date">December 15, 2009</p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="meta-head">Amount Due</td>
+                                                                        <td><div class="due">$875.00</div></td>
+                                                                    </tr>
+                                                    
+                                                                </table>
+                                                                    
+                                                                    </div>
+                                                                    
+                                                                    <table id="items">
+                                                                    
+                                                                      <tr>
+                                                                          <th>Type</th>
+                                                                          <th>Subtype1</th>
+                                                                          <th>SubType2</th>
+                                                                          <th>Quantity</th>
+                                                                          <th>Expected Price</th>
+                                                                      </tr>
+                                                                      
+                                                                      <tr class="item-row">
+                                                                          <td class="item-name"><div class="delete-wpr"><p id="types"> </p></div></td>
+                                                                          <td class="description"><p id = "subtypes1"></p></td>
+                                                                          <td><p class="cost" id="subtypes2"></p></td>
+                                                                          <td><p class="qty" id = "quantities"></p></td>
+                                                                          <td>$<span class="price" id="shipment_costss"></span></td>
+                                                                      </tr>
+                                                                      
+                                                                      <tr class="item-row">
+                                                                          <td class="item-name"><div class="delete-wpr"><p id="types_0"></p></div></td>
+                                                    
+                                                                          <td class="description"><p>Sample</p></td>
+                                                                          <td><p class="cost">Sample</p></td>
+                                                                          <td><p class="qty">3</p></td>
+                                                                          <td><span class="price">$225.00</span></td>
+                                                                      </tr>
+                                                                      
+                                                                      
+                                                                      
+                                                                      
+                                                                      <tr>
+                                                    
+                                                                          <td colspan="2" class="blank"> </td>
+                                                                          <td colspan="2" class="total-line">Total</td>
+                                                                          <td class="total-value"><div id="total">$875.00</div></td>
+                                                                      </tr>
+                                                                      
+                                                                    
+                                                                    </table>
+                                                                    
+                                                                    <div id="terms">
+                                                                      <h5>Terms</h5>
+                                                                      <p>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</p>
+                                                                    </div>
+                                                            
+                                                            </div>
+                                                                                                            
+                                                                                                            
+                                                                                                        </div>
+													<div class="modal-footer">
+														<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+													   
+													</div>
+												</div>
+											</div>
+										</div>      
+                                    
+                                    <!-------------------------------------------------------------->
+                                 <div class="form-group">
+                                        <label>Total Amount</label>
+                                        <div class="form-group input-group">
+                                            <input type="text" name="total_amount" class="form-control" readonly>
+                                            <span class="input-group-addon">.00</span>
+                                        </div>
+                                    </div>
+                               
+                <input type="button" name="review" class="action-button btn btn-default" value="Review" id = "mybutt" />
+            
+                             </br>
+                             &nbsp;
+<!------------------------------------------------------------------------------------------------------>
+                                    <div class="form-group">
+                                        <label>Amount Paid</label>
+                                        <div class="form-group input-group">
+                                            <input type="text" name="amount_paid" class="form-control">
+                                            <span class="input-group-addon">.00</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="form-group">
+                                        <label>Payment Status</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="payment_status" value="NotPaid" checked="">Not Paid
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="payment_status" value="Partial">Partial Paid
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="payment_status" value="Paid">Paid
+                                        </label>
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <label>Shipment Status</label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shipment_status" value="collected" checked="">Collected
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shipment_status" value="delievered">Delievered
+                                        </label>
+                                        <label class="radio-inline">
+                                            <input type="radio" name="shipment_status" value="return">Return/Canceled
+                                        </label>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleTextarea">Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
+                                    </div>
+
+
+
+                                    
+                                    <button type="submit" class="btn btn-default">Submit Button</button>
+                                    <button type="reset" class="btn btn-default">Reset Button</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!-- /.row (nested) -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>
+    <!-- /#page-wrapper -->
+</div>
+<!-- /#wrapper -->
+<script type="text/javascript">
+    
+    /*jQuery(document).ready(function(){
+        var serial  = id.split("_");
+        console.log(serial);
+        jQuery('#hideshow').on('click', function(event) {        
+             jQuery('#testDiv').toggle('show');
+        });
+    });*/
+
+    function hideButton(id){
+        var serial = id.split("-");
+        var testDiv = "#testDiv-"+serial[1];
+        console.log(testDiv);
+        $(testDiv).toggle( "slow", function(){});
+    }
+
+    $(document).ready(function() {
+        $("#dropDownType2").attr('disabled',true);
+        $("#dropDownType3").attr('disabled',true);
+        $(".VINumber").hide();
+        $(".VIDetails").hide();
+
+        $("#is_orphan").click(function(){
+            is_orphan.value = !(is_orphan.value);
+            console.log(is_orphan.value);
+            $("#for_journey").toggle(!this.checked);
+        })
+        $("#is_sender").click(function(){
+            is_sender.value = !(is_sender.value);
+            console.log(is_sender.value);
+            $("#for_receiver").toggle(!this.checked);
+        })
+    });
+
+    $('#mybutt').click(function() {
+        var shipment = document.getElementById("shipment_name").value;
+       var sender_s = document.getElementsByName('sender')[0];
+        var sender_text = sender_s.options[sender_s.selectedIndex].text;
+       var journey = document.getElementsByName('for_journey')[0];
+       var journey_text = journey.options[journey.selectedIndex].text;
+       
+       var type_s = document.getElementsByName('cargos[0].type')[0];
+       
+       var type_text = type_s.options[type_s.selectedIndex].text;
+       
+       var type_0 = document.getElementsByName('type')[0];
+        var type_0_text = type_0.options[type_0.selectedIndex].text;
+        
+        var subtype1_s = document.getElementsByName('cargos[0].subtype')[0];
+       var subtype1_text = subtype1_s.options[subtype1_s.selectedIndex].text;
+       
+       var subtype2_s = document.getElementsByName('cargos[0].sub_subtype')[0];
+       var subtype2_text = subtype2_s.options[subtype2_s.selectedIndex].text;
+       
+      var quantitys = document.getElementById('cargo.quantity[0]').value;
+       
+       
+       var shipment_costs = document.getElementById('shipment_cost-0').value;
+       
+       
+        document.getElementById("customer-title").innerHTML = shipment;
+        document.getElementById("senders").innerHTML = sender_text;
+        document.getElementById("journeys").innerHTML = journey_text;
+        document.getElementById("types").innerHTML = type_text;
+        document.getElementById("types_0").innerHTML = type_0_text;
+        document.getElementById("subtypes1").innerHTML = subtype1_text;
+        document.getElementById("subtypes2").innerHTML = subtype2_text;
+       document.getElementById("quantities").innerHTML = quantitys;
+       document.getElementById("shipment_costss").innerHTML = shipment_costs;
+    $('#otherss').modal('show');
+});
+
+    
+    function checkVIN(id){
+        console.log("ID - > "+id);
+        var serial = id.split("-");
+        var VIN = "#vehicle_id_no-"+serial[1];
+        var VINvalue = $(VIN).val();//getting vin value
+        var VIN_details_div = "#vinDetailsDiv-"+serial[1];
+        
+        //geting id of all vehicle parameters
+        var ErrorValue = "#vin_error-"+serial[1];
+        var Manufacturer = "#vin_manufacturer-"+serial[1];
+        var Model = "#vin_model-"+serial[1];
+        var ModelYear = "#vin_modelyear-"+serial[1];
+        var Make = "#vin_make-"+serial[1];
+
+
+        var endpointUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/"+VINvalue+"?format=json";
+        //"https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/jt4jm11d6t0017325?format=json"
+        $.ajax({
+            url: endpointUrl,
+            dataType: "text",
+            success:(data)=>{
+                var JSONdata = JSON.parse(data);
+                var VINdetails = {
+                    VIN_ErrorValue : "",
+                    VIN_Manufacturer : "",
+                    VIN_Model : "",
+                    VIN_ModelYear : "",
+                    VIN_Make : ""
+                }
+
+                //console.log("--> RESPONSE - > ",JSONdata);
+                $(VIN_details_div).css('display','inline');
+
+                //itterating for all resulted Variable and setting value of all desired Vehicle Variables
+                JSONdata.Results.forEach((object)=>{
+                    if(object.Variable=="Error Code"){
+                        VINdetails.VIN_ErrorValue = object.Value;
+                        $(ErrorValue).val(VINdetails.VIN_ErrorValue);
+                    }
+
+                    if(object.Variable=="Manufacturer Name"){
+                        VINdetails.VIN_Manufacturer = object.Value;
+                        $(Manufacturer).val(VINdetails.VIN_Manufacturer);
+                    }
+
+                    if(object.Variable=="Model"){
+                        VINdetails.VIN_Model = object.Value;
+                        $(Model).val(VINdetails.VIN_Model);
+                    }
+
+                    if(object.Variable=="Model Year"){
+                        VINdetails.VIN_ModelYear = object.Value;
+                        $(ModelYear).val(VINdetails.VIN_ModelYear);
+                    }
+
+                    if(object.Variable=="Make"){
+                        VINdetails.VIN_Make = object.Value;
+                        $(Make).val(VINdetails.VIN_Make);
+                    }
+                });
+
+                console.log("-> Vehicle VinDetails = ",VINdetails);
+            },
+            error:(jqXHR, textStatus, errorThrown)=>{
+                console.log("AJAX Error: Getting error in ",textStatus);          
+            }   
+        })
+    }
+
+    function isOtherSelectedForSubType1(id){
+        var serial = id.split("-");
+        var typeVal = "#"+id;
+        if($(typeVal).val() == "others"){
+            document.getElementById( 'sub_type-' + serial[1] ).style.display = 'block';
+        }
+        else
+        {
+            document.getElementById( 'sub_type-' + serial[1] ).style.display = 'none';   
+        }
+    }
+
+    function isOtherSelectedForSubType2(id){
+        var serial = id.split("-");
+        var typeVal = "#"+id;
+        if($(typeVal).val() == "others"){
+            document.getElementById( 'sub_sub_type-' + serial[1] ).style.display = 'block';
+        }
+        else
+        {
+            document.getElementById( 'sub_sub_type-' + serial[1] ).style.display = 'none';   
+        }
+    }
+
+
+
+    function createShipmentType(id){
+        var serial = id.split("-");
+        var typeVal = "#"+id;
+        var subtypeDropdown1 = "#subtype-"+serial[1];
+        var subtypeDropdown2 = "#sub_subtype-"+serial[1];
+        var shipmentCost = "#shipment_cost-"+serial[1];
+        var VIN = "#VINdiv-"+serial[1];
+        var VIN_details_div = "#vinDetailsDiv-"+serial[1];
+        var types = [
+                        {
+                            name: 'Fruits', 
+                            subtype1:[
+                                    'mango',
+                                    'apple',
+                                    'orange',
+                                    'banana',
+                                    'Avocado',
+                                    'others' 
+                            ],
+                            subtype2:[
+                                    'Berries',
+                                    'Pits',
+                                    'Core',
+                                    'Citrus Fruits',
+                                    'Melons',
+                                    'others'
+                            ],
+                            price: "100"
+                        },
+                        {
+                            name: 'Smartphones', 
+                            subtype1:[
+                                    'Redmi',
+                                    'Samsung',
+                                    'Iphone',
+                                    'Sony',
+                                    'Lenovo',
+                                    'others'
+                            ],
+                            subtype2:[
+                                    'Keypad',
+                                    'Touchscreen',
+                                    'Qwerty',
+                                    'others'
+                            ],
+                            price: "200"
+                        },
+                        {
+                            name: 'Bikes', 
+                            subtype1:[
+                                    'Avenger',
+                                    'Thunderbird',
+                                    'R15',
+                                    'others'
+                            ],
+                            subtype2:[
+                                    '180cc',
+                                    '220cc',
+                                    '300cc',
+                                    'others'
+                            ],
+                            price: "4000"
+                        },
+                        {
+                            name: 'Vehicle', 
+                            subtype1:[
+                                '-'
+                            ],
+                            subtype2:[
+                                '-'
+                            ],
+                            price: "4000"
+                        },
+                        {
+                            name: 'Others',
+                            subtype1:[
+                                'Others'
+                            ],
+                            subtype2:[
+                                'Others'
+                            ],
+                            price: "0"
+                        },
+                    ]
+
+        $(subtypeDropdown1).html('');
+        $(subtypeDropdown2).html('');
+        $.each(types, function( index, typeValue ) {
+          if($(typeVal).val()==typeValue.name){
+
+            //console.log("> type value is - > ",$("#"+id).val());
+            $.each(typeValue.subtype1, function( index1, subtype1) {
+                $(subtypeDropdown1).append($("<option />").val(subtype1).text(subtype1));
+            });
+            $.each(typeValue.subtype2, function( index2, subtype2) {
+                $(subtypeDropdown2).append($("<option />").val(subtype2).text(subtype2));
+            });
+
+            $(shipmentCost).val(typeValue.price);
+
+            if($(typeVal).val()=="Vehicle"){
+                $(VIN).css('display','inline');
+            }
+            else {
+                $(VIN).css('display', 'none');
+                $(VIN_details_div).css('display', 'none');
+            }
+          } 
+        });
+        
+        $(subtypeDropdown1).attr('disabled',false);
+        $(subtypeDropdown2).attr('disabled',false);
+        
+        if($(typeVal).val()=="Others"){
+            $(subtypeDropdown1).attr('disabled',true);
+            $(subtypeDropdown2).attr('disabled',true);
+            document.getElementById( 'main_type-'+ serial[1] ).style.display = 'block';
+            document.getElementById( 'sub_type-' + serial[1] ).style.display = 'block';
+            document.getElementById( 'sub_sub_type-'  + serial[1] ).style.display = 'block';
+        }
+        else
+        {
+            document.getElementById( 'main_type-' + serial[1] ).style.display = 'none';
+            document.getElementById( 'sub_type-' + serial[1] ).style.display = 'none';
+            document.getElementById( 'sub_sub_type-' + serial[1] ).style.display = 'none';
+        }
+    }
+
+    window.cargosIndex = 0;
+    function addprizes(ab){
+        //alert("Working");
+      //ab.disabled = true;
+      cargosIndex++;
+      //document.getElementById('removeButton').style.color = "#337ab7";
+     // document.getElementById('removeButton').style.display = 'block';
+      
+          var $template = $('#cargoForm'),
+              $clone    = $template
+                              .clone()
+                              .removeClass('hide')
+                              .removeAttr('id')
+                              .attr('data-cargos-index', cargosIndex)
+                              .insertBefore($template);
+
+          // Update the name attributes
+/*         type
+         subtype
+         sub_subtype
+         shipment_cost
+         value_added
+         inspection_fee
+         quantity*/
+          $clone
+              .find('[name="type"]').attr('name', 'cargos[' + cargosIndex + '].type').end()
+              .find('[name="subtype"]').attr('name', 'cargos[' + cargosIndex + '].subtype').end()
+              .find('[name="sub_subtype"]').attr('name', 'cargos[' + cargosIndex + '].sub_subtype').end()
+              .find('[name="main_type"]').attr('name', 'cargos[' + cargosIndex + '].main_type').end()
+              .find('[name="sub_type"]').attr('name', 'cargos[' + cargosIndex + '].sub_type').end()
+              .find('[name="sub_sub_type"]').attr('name', 'cargos[' + cargosIndex + '].sub_sub_type').end()
+              .find('[name="shipment_cost"]').attr('name', 'cargos[' + cargosIndex + '].shipment_cost').end()
+              .find('[name="value_added"]').attr('name', 'cargos[' + cargosIndex + '].value_added').end()
+              .find('[name="inspection_fee"]').attr('name', 'cargos[' + cargosIndex + '].inspection_fee').end()
+              .find('[name="quantity"]').attr('name', 'cargos[' + cargosIndex + '].quantity').end()
+              .find('[name="barcode"]').attr('name', 'cargos[' + cargosIndex + '].barcode').end()
+              .find('[name="vehicle_id_no"]').attr('name', 'cargos[' + cargosIndex + '].vehicle_id_no').end()
+              .find('[name="vin_error"]').attr('name', 'cargos[' + cargosIndex + '].vin_error').end()
+              .find('[name="vin_make"]').attr('name', 'cargos[' + cargosIndex + '].vin_make').end()
+              .find('[name="vin_manufacturer"]').attr('name', 'cargos[' + cargosIndex + '].vin_manufacturer').end()
+              .find('[name="vin_model"]').attr('name', 'cargos[' + cargosIndex + '].vin_model').end()
+              .find('[name="vin_modelyear"]').attr('name', 'cargos[' + cargosIndex + '].vin_modelyear').end()
+
+
+
+
+
+
+          // Update the id attributes
+          previousIndex = cargosIndex - 1 ; 
+          $clone
+              .find('[id="type"]').attr('id', 'type-' + cargosIndex).end()
+              .find('[id="subtype"]').attr('id', 'subtype-' + cargosIndex).end()
+              .find('[id="sub_subtype"]').attr('id', 'sub_subtype-' + cargosIndex).end()
+              .find('[id="main_type"]').attr('id', 'main_type-' + cargosIndex).end()
+              .find('[id="sub_type"]').attr('id', 'sub_type-' + cargosIndex).end()
+              .find('[id="sub_sub_type"]').attr('id', 'sub_sub_type-' + cargosIndex).end()
+              .find('[id="shipment_cost"]').attr('id', 'shipment_cost-' + cargosIndex).end()
+              .find('[id="cargo.value_added"]').attr('id', 'cargo.value_added-' + cargosIndex).end()
+              .find('[id="cargo.inspection_fee"]').attr('id' , 'cargo.inspection_fee-' + cargosIndex).end()
+              .find('[id="cargo.quantity"]').attr('id', 'cargo.quantity-' + cargosIndex).end()
+              .find('[id="cargo.barcode"]').attr('id', 'cargo.barcode-' + cargosIndex).end()
+              .find('[id="VINdiv"]').attr('id', 'VINdiv-' + cargosIndex).end()
+              .find('[id="vehicle_id_no"]').attr('id', 'vehicle_id_no-' + cargosIndex).end()
+              .find('[id="searchVINbtn"]').attr('id', 'searchVINbtn-' + cargosIndex).end()
+
+              .find('[id="vinDetailsDiv"]').attr('id', 'vinDetailsDiv-' + cargosIndex).end()
+              .find('[id="vin_error"]').attr('id', 'vin_error-' + cargosIndex).end()
+              .find('[id="vin_make"]').attr('id', 'vin_make-' + cargosIndex).end()
+              .find('[id="vin_manufacturer"]').attr('id', 'vin_manufacturer-' + cargosIndex).end()
+              .find('[id="vin_model"]').attr('id', 'vin_model-' + cargosIndex).end()
+              .find('[id="vin_modelyear"]').attr('id', 'vin_modelyear-' + cargosIndex).end()
+              .find('[id="testDiv"]').attr('id', 'testDiv-' + cargosIndex).end()
+              
+
+          //ab.style.display = 'none';
+          //ab = 'null';
+          //addRanks();
+          var $template1 = $('#hideShowbutton'),
+              $clone    = $template1
+                              .clone()
+                              .removeAttr('id')
+                              .insertBefore($template);
+          $clone
+                .find('[id="hideshow"]').attr('id', 'hideshow-' + cargosIndex).end()
+          // display hide show button 
+          var hideButton = "#hideshow-"+cargosIndex;
+          console.log(hideButton);
+          $(hideButton).css('display', 'block');
+    }
+
+    function removeprizes(btn)
+    {
+      var $row  = $(btn).parents('.form-group'),
+        index = $row.attr('data-cargos-index');
+      $row.remove();
+      var hideButton = "#hideshow-"+cargosIndex;
+      $(hideButton).remove();
+      cargosIndex--;
+      //console.log("cargos Index" + cargosIndex);
+      if( cargosIndex == 0 )
+      {
+         //document.getElementById('removeButton').style.display = 'none';
+         document.getElementById('addButton').style.display = 'block';
+      }  
+    }
+</script>
+    
+<!-- jQuery -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<script src="../js/example.js" ></script>
+<!-- Morris Charts JavaScript -->
+<script src="../bower_components/raphael/raphael-min.js"></script>
+<script src="../bower_components/morrisjs/morris.min.js"></script>
+<script src="../js/morris-data.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
+
+
+<% include footer %>

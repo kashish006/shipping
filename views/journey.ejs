@@ -1,0 +1,173 @@
+<% include header %>
+<div id="wrapper">
+
+	<% include navigation %>
+            
+    <div id="page-wrapper">
+        <% if(success && success!=''){ %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+        <% }
+        else if(error && error!=''){ %>
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+        <% }else{ %>
+            <br>
+        <% } %>
+        <div class="alert alert-success" style="display:none" role="alert"></div>
+        <div class="alert alert-danger" style="display:none" role="alert"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Journeys</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Journeys Record
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Ship ID</th>
+                                        <th>Source</th>
+                                        <th>Destination</th>
+                                        <th>Status</th>
+                                        <th>Created By</th>
+                                        <th>Start/End</th>
+                                        <th>Read</th>
+                                        <th>Del</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <!--loop-->    
+                                    <%  
+                                        for (var index in journeyList){
+                                        %>
+                                            <tr class="gradeA">
+                                                <td><%- journeyList[index].name %></td>
+                                                <td><%- journeyList[index].ship_id %></td>
+                                                <td><%- journeyList[index].source_port %></td>
+                                                <td><%- journeyList[index].destination_port %></td>
+                                                <td>
+                                                    <% if(journeyList[index].status=="NotStarted") { %>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; Not Started Yet
+                                                    <% }else if(journeyList[index].status=="Started"){ %>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; Started
+                                                    <% }else{ %>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; Finished    
+                                                    <% } %> 
+
+                                                </td>
+                                                <td class="center"><%- journeyList[index].created_by %></td>
+                                                
+                                                <td class="center">
+                                                    <% if(journeyList[index].status=="NotStarted"){ %>
+                                                        <input type="button" class="btn btn-success <%- journeyList[index]._id %>" id="<%- journeyList[index]._id %>" class="journeyAction" onClick="changeJourneyStatus(this.id)" value="Start">
+                                                        <input type="hidden" name="status" id="status-<%- journeyList[index]._id %>" value="Started">
+                                                    <% }else if(journeyList[index].status=="Started"){ %>
+                                                        <input type="button" class="btn btn-danger <%- journeyList[index]._id %>" id="<%- journeyList[index]._id %>" class="journeyAction" onClick="changeJourneyStatus(this.id)" value="Stop">
+                                                        <input type="hidden" name="status" id="status-<%- journeyList[index]._id %>" value="Finished">
+                                                    <% }else{ %>
+                                                        <input type="button" class="btn btn-info disabled <%- journeyList[index]._id %>" id="<%- journeyList[index]._id %>" class="journeyAction" value="Finished">
+                                                    <% } %>
+                                                </td>
+                                                
+                                                <td class="center">
+                                                <% if(journeyList[index].status=="NotStarted") { %>
+                                                    <a href="/journey/update_journey?id=<%- journeyList[index]._id %>"><img src="../images/updateicon.png" style="height:30px; width:30px"></a><br/>
+                                                
+                                            </td>
+                                            <td>
+                                                <a href="/journey/delete_journey/<%- journeyList[index]._id %>"><img src="../images/deleteicon.png" style="height:18px; width:18px" class="delete" data-confirm="Are you sure to delete this journey?"></a>
+                                                <% } %>
+                                            </td>
+                                            </tr>
+                                        <%
+                                        }    
+                                    %>
+                                <!--loop-->
+                                </tbody>
+                            </table>
+                        </div>
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>    
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
+
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+<script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+                responsive: true
+        });
+    });
+    function changeJourneyStatus(journeyId){
+
+        var params = {
+                        status: $('#status-'+journeyId).val(), 
+                        journeyId: journeyId,
+                    };
+        //console.log("> params - > ",params);
+
+        $.ajax({
+            url: 'http://'+window.location.host+'/journey/updateJourneyStatus',
+            dataType: "text",
+            data: params,
+            success: function(data) 
+            {   
+                location.reload();
+            },
+            error: function(jqXHR, textStatus, errorThrown) 
+            {
+                console.log('error ' + textStatus + " " + errorThrown);
+            }
+        });
+    }
+
+    var deleteLinks = document.querySelectorAll('.delete');
+
+    for (var i = 0; i < deleteLinks.length; i++) {
+        deleteLinks[i].addEventListener('click', function(event) {
+            event.preventDefault();
+
+            var choice = confirm(this.getAttribute('data-confirm'));
+
+            if (choice) {
+                window.location.href = this.getAttribute('href');
+            }
+        });
+    }
+</script>
+
+<% include footer %>

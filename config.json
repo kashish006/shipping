@@ -1,0 +1,6 @@
+{
+  "GCLOUD_PROJECT": "totemic-carrier-139812",
+  "DATA_BACKEND": "mongodb",
+  "MONGO_URL": "mongodb://root:admin@104.197.186.156:27017/admin",
+  "MONGO_COLLECTION": "books"
+}

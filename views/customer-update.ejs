@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Shipping Site</title>
+    <!-- Bootstrap Core CSS -->
+    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- MetisMenu CSS -->
+    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+
+    <!-- Timeline CSS -->
+    <link href="../dist/css/timeline.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+
+    <!-- Morris Charts CSS -->
+    <link href="../bower_components/morrisjs/morris.css" rel="stylesheet">
+
+    <!-- Custom Fonts -->
+    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!--<script language="javascript">
+        window.location.href = "pages/index.html"
+    </script>-->
+
+</head>
+<body>
+    <div id="wrapper">
+
+    	<% include navigation %>
+        
+         
+        <div id="page-wrapper">
+            <% if(success && success!=''){ %>
+            <div class="alert alert-success" role="alert"><%= success %></div>
+            <% }
+            else if(error && error!=''){ %>
+                <div class="alert alert-danger" role="alert"><%= error %></div>
+            <% }else{ %>
+                <br>
+            <% } %>
+            <div class="alert alert-success" style="display:none" role="alert"></div>
+            <div class="alert alert-danger" style="display:none" role="alert"></div>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <h1 class="page-header">Add Customer</h1>
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Basic Form Elements
+                        </div>
+                        <div class="panel-body">
+                            <div class="row">
+                                <div class="col-lg-10">
+                                    <form role="form" action="/customers/update_customer" method="post">
+                                        
+                                        <div class="form-group">
+                                            <label>First Name</label>
+                                            <input name="first_name" class="form-control" value="<%- customerDetails.first_name %>">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Last Name</label>
+                                            <input name="last_name" class="form-control" value="<%- customerDetails.last_name %>">
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label>Mobile Number</label>
+                                            <input type="number" name="mobile_number" class="form-control" value="<%- customerDetails.mobile_number %>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Email</label>
+                                            <input type="email" name="email" class="form-control" value="<%- customerDetails.email %>">
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Address</label>
+                                            <textarea name="address" class="form-control" rows="3"> <%- customerDetails.address %></textarea>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label>Comment</label>
+                                            <textarea name="comments" class="form-control" rows="3"> <%- customerDetails.comments %></textarea>
+                                        </div>
+                                        
+                                        <button type="submit" class="btn btn-default">Update</button>
+                                        <button type="reset" class="btn btn-default">Reset</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <!-- /.row (nested) -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-12 -->
+            </div>
+            <!-- /.row -->
+        </div>
+        <!-- /#page-wrapper -->
+    </div>
+    <!-- /#wrapper -->
+
+    	
+    <!-- jQuery -->
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+    <!-- Morris Charts JavaScript -->
+    <script src="../bower_components/raphael/raphael-min.js"></script>
+    <script src="../bower_components/morrisjs/morris.min.js"></script>
+    <script src="../js/morris-data.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="../dist/js/sb-admin-2.js"></script>
+        
+        
+</body>
+</html>

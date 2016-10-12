@@ -1,0 +1,94 @@
+<% include header %>
+<div id="wrapper">
+
+    <% include navigation %>
+            
+    <div id="page-wrapper">
+        <% if(success && success!=''){ %>
+        <div class="alert alert-success" role="alert"><%= success %></div>
+        <% }
+        else if(error && error!=''){ %>
+            <div class="alert alert-danger" role="alert"><%= error %></div>
+        <% }else{ %>
+            <br>
+        <% } %>
+        <div class="alert alert-success" style="display:none" role="alert"></div>
+        <div class="alert alert-danger" style="display:none" role="alert"></div>
+
+        <div class="row">
+            <div class="col-lg-12">
+                <h1 class="page-header">Barcode Scanner</h1>
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        Enter shipment barcode
+                    </div>
+                    <!-- /.panel-heading -->
+                    <div class="panel-body">
+                        <div class="dataTable_wrapper">
+                            <form>
+                                <input type="text" id="barcode-text" />
+                                <button type="button" class="btn btn-default">Go</button>
+                                OR
+                                <button type="button" class="btn btn-default" onclick="openReader()">Scan Barcode</button>  
+                            </form>
+                        </div>
+                            <!-- <div id="result_strip"> 
+                              <ul class="thumbnails"></ul> 
+                              <ul class="collector"></ul> 
+                            </div> 
+                            <div id="interactive" class="viewport"></div> -->
+                        <!-- /.table-responsive -->
+                    </div>
+                    <!-- /.panel-body -->
+                </div>
+                <!-- /.panel -->
+            </div>
+            <!-- /.col-lg-12 -->
+        </div>
+        <!-- /.row -->
+    </div>    
+</div>
+<!-- /#wrapper -->
+
+<!-- jQuery -->
+<script src="../bower_components/jquery/dist/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="../bower_components/datatables/media/js/jquery.dataTables.min.js"></script>
+<script src="../bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
+<!-- Page-Level Demo Scripts - Tables - Use for reference -->
+
+<script>
+    function openReader(){
+        window.open("../scan_test.html");
+    }
+
+</script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <script src="../js/jquery-1.11.3.js" type="text/javascript"></script> 
+    <script src="../js/quagga.js" type="text/javascript"></script>   
+        <script src="../js/quagga.min.js" type="text/javascript"></script>  
+    <script src="../js/BarcodeReader.js" type="text/javascript"></script> 
+    <meta name="viewport" content="width=device-width; initial-scale=1.0" /> 
+<!--Turning on our camera-->
+<!-- <script type="text/javascript" src="../js/camera_example.js"></script>
+ -->
+
+
+<% include footer %>
