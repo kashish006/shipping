@@ -1,3 +1,5 @@
+     
+
 <% include header %>
 <head>
     
@@ -39,7 +41,7 @@
                                 <form role="form" action="/shipment/post" method="post" enctype="multipart/form-data">
                                     <div class="form-group">
                                         <label>Shipment Name</label>
-                                        <input name="name" class="form-control" id="shipment_name">
+                                        <input name="name" readonly class="form-control" id="shipment_name" value="<%- shipmentName %>">
                                     </div> 
 
                                     <div class="form-group" >
@@ -84,7 +86,7 @@
                                     <legend>Receiver Details</legend>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input name="receiver_name" class="form-control">
+                                        <input name="receiver_name" class="form-control" id="receiver_name">
                                     </div> 
                                     <div class="form-group" id = "contact_number">
                                         <label>Contact Number</label>
@@ -169,7 +171,7 @@
                                         </div> 
 
                                         <div class="form-group">
-                                            <label>Expected Minimum Cost Par/Piece</label>
+                                            <label>Recommended Shipping Price/Piece</label>
                                             <div class="form-group input-group">
                                                 <input type="text" id="shipment_cost-0" name="cargos[0].shipment_cost" class="form-control">
                                                 <span class="input-group-addon">.00</span>
@@ -282,7 +284,7 @@
 
 
                                         <div class="form-group">
-                                            <label>Expected Minimum Cost Par/Piece</label>
+                                            <label>Recommended Shipping Price/Piece</label>
                                             <div class="form-group input-group">
                                                 <input type="text" id="shipment_cost" name="shipment_cost"  class="form-control">
                                                 <span class="input-group-addon">.00</span>
@@ -291,7 +293,7 @@
                                         
                                         <div class="form-group VINumber" id="VINdiv">
                                             <label>Vehical Identification Number</label>
-                                            <input type="text" id="vehicle_id_no" name="VIN_text" placeholder="Vehicle Identification Num" class="form-control">
+                                            <input type="text" id="vehicle_id_no" name="vehicle_id_no" placeholder="Vehicle Identification Num" class="form-control">
                                             <button type="button" id="searchVINbtn" onclick="checkVIN(this.id)" class="btn btn-default">Go</button>
                                         </div>
 
@@ -354,20 +356,20 @@
                                     
                                      <div class="form-group">
                                              <button type="button" style="color: #337ab7" class="btn btn-default addButton " onclick="addprizes(this)"><i class="fa fa-plus"></i>Add Cargo</button>
-											
+                                            
                                         </div>
                                   
                                     <hr/>
                                     
                               <div class="modal fade" id="otherss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-											<div class="modal-dialog" style="width:1000px">
-												<div class="modal-content">
-													<div class="modal-header">
-														<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-														 <h4 class="modal-title" id="myModalLabel">Invoice</h4>
+                                            <div class="modal-dialog" style="width:1000px">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                         <h4 class="modal-title" id="myModalLabel">Invoice</h4>
 
-													</div>
-													<div class="modal-body">
+                                                    </div>
+                                                    <div class="modal-body">
                                                                                                             
                                                                                                             <div id="page-wrap">
 
@@ -396,11 +398,28 @@
                                                                     <div style="clear:both"></div>
                                                                     
                                                                     <div id="customer">
+                                                                <table id="extra">
+                                                                     <tr>
+                                                                        <td class="meta-head" id=>Shipment Name</td>
+                                                                        <td><p id="shipment_nam"></p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="meta-head" id=>Journey</td>
+                                                                        <td><p id ="journeys"></p></td>
+                                                                    </tr>
+                                                                    <tr>
                                                     
-                                                                <p id="customer-title"></p><br />
-                                                               <b>Journey:<p id ="journeys"></p></b></b><br />
-                                                              <b>  Sender:<p id="senders"></p></b> <br />
-                                                                <b> Reciever:<p id = "recievers"></p></b> 
+                                                                        <td class="meta-head">Sender</td>
+                                                                        <td><p id="senders"></p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="meta-head">Receiver</td>
+                                                                        <td><p id = "receiver"></p></td>
+                                                                    </tr>
+                                                    
+                                                                </table>
+                                                                
+                                                               
                                                     
                                                                 <table id="meta">
                                                                     <tr>
@@ -424,11 +443,13 @@
                                                                     <table id="items">
                                                                     
                                                                       <tr>
-                                                                          <th>Type</th>
-                                                                          <th>Subtype1</th>
-                                                                          <th>SubType2</th>
+                                                                          <th>S.N</th>
+                                                                          <th>Cargo Description</th>
                                                                           <th>Quantity</th>
-                                                                          <th>Expected Price</th>
+                                                                          <th>Shipping Price</th>
+                                                                          <th>Value addition in Cost</th>
+                                                                          
+                                                                          
                                                                       </tr>
                                                                       
                                                                       <tr class="item-row">
@@ -470,13 +491,13 @@
                                                                                                             
                                                                                                             
                                                                                                         </div>
-													<div class="modal-footer">
-														<button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
-													   
-													</div>
-												</div>
-											</div>
-										</div>      
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
                                     
                                     <!-------------------------------------------------------------->
                                  <div class="form-group">
@@ -561,20 +582,17 @@
              jQuery('#testDiv').toggle('show');
         });
     });*/
-
     function hideButton(id){
         var serial = id.split("-");
         var testDiv = "#testDiv-"+serial[1];
         console.log(testDiv);
         $(testDiv).toggle( "slow", function(){});
     }
-
     $(document).ready(function() {
         $("#dropDownType2").attr('disabled',true);
         $("#dropDownType3").attr('disabled',true);
         $(".VINumber").hide();
         $(".VIDetails").hide();
-
         $("#is_orphan").click(function(){
             is_orphan.value = !(is_orphan.value);
             console.log(is_orphan.value);
@@ -587,7 +605,14 @@
         })
     });
 
+    window.cargo_object = new Object();
+    window.cargo_array = [];
     $('#mybutt').click(function() {
+        
+            
+        console.log("my butt click function ");
+
+
         var shipment = document.getElementById("shipment_name").value;
        var sender_s = document.getElementsByName('sender')[0];
         var sender_text = sender_s.options[sender_s.selectedIndex].text;
@@ -611,9 +636,10 @@
        
        
        var shipment_costs = document.getElementById('shipment_cost-0').value;
+       var receivers = document.getElementById("receiver_name").value;
        
        
-        document.getElementById("customer-title").innerHTML = shipment;
+        document.getElementById("shipment_nam").innerHTML = shipment;
         document.getElementById("senders").innerHTML = sender_text;
         document.getElementById("journeys").innerHTML = journey_text;
         document.getElementById("types").innerHTML = type_text;
@@ -622,9 +648,71 @@
         document.getElementById("subtypes2").innerHTML = subtype2_text;
        document.getElementById("quantities").innerHTML = quantitys;
        document.getElementById("shipment_costss").innerHTML = shipment_costs;
-    $('#otherss').modal('show');
-});
+        document.getElementById("receiver").innerHTML = receivers;
+    // Code to fetch the cargos values created dynamically //
+    console.log("cargos index " + cargosIndex);
+    /*{
+        cargoId: {type: String},
+        type: {type: String},
+        main_type: {type: String},
+        subtype: {type: String},
+        sub_type: {type: String},
+        sub_subtype: {type: String},
+        sub_sub_type: {type: String},
+        expected_cost_price: {type: Number},
+        vehicle_id_no: {type: String},
+        vin_error: {type: String},
+        vin_make: {type: String},
+        vin_manufacturer: {type: String},
+        vin_model: {type: String},
+        vin_modelyear: {type: String},
+        value_added: {type: Number},
+        inspection_fee: {type: Number},
+        quantity: {type: Number},
+    };*/
 
+    for( i=0; i<=cargosIndex; i++)
+    {
+        cargo_object.type = document.getElementsByName('cargos['+i+'].type')[0].value;
+        cargo_object.subtype = document.getElementsByName('cargos['+i+'].subtype')[0].value;
+        cargo_object.sub_subtype = document.getElementsByName('cargos['+i+'].sub_subtype')[0].value;
+
+        // Values if user has selected "Others" for main , sub type OR sub sub type can be Undefine
+        cargo_object.main_type = document.getElementsByName('cargos['+i+'].main_type')[0].value;
+        cargo_object.sub_type = document.getElementsByName('cargos['+i+'].sub_type')[0].value;
+        cargo_object.sub_sub_type = document.getElementsByName('cargos['+i+'].sub_sub_type')[0].value;
+        cargo_object.shipment_cost = document.getElementsByName('cargos['+i+'].shipment_cost')[0].value;
+        cargo_object.vehicle_id_no = document.getElementsByName('cargos['+i+'].vehicle_id_no')[0].value;
+        cargo_object.vin_error = document.getElementsByName('cargos['+i+'].vin_error')[0].value;
+        cargo_object.vin_make = document.getElementsByName('cargos['+i+'].vin_make')[0].value;
+        cargo_object.vin_manufacturer = document.getElementsByName('cargos['+i+'].vin_manufacturer')[0].value;
+        cargo_object.vin_model = document.getElementsByName('cargos['+i+'].vin_model')[0].value;
+        cargo_object.vin_modelyear = document.getElementsByName('cargos['+i+'].vin_modelyear')[0].value;
+        cargo_object.value_added = document.getElementsByName('cargos['+i+'].value_added')[0].value;
+        cargo_object.inspection_fee = document.getElementsByName('cargos['+i+'].inspection_fee')[0].value;
+        cargo_object.quantity = document.getElementsByName('cargos['+i+'].quantity')[0].value;
+        
+        
+        cargo_array.push(cargo_object);
+        //console.log("the values fetched are " + cargo_array );
+    }
+    //console.log("the values fetched are " + cargo_array );
+   var a = JSON.stringify(cargo_array);
+    console.log("total array:: " + a );
+    for(i=0; i < cargo_array.length; i++)
+    {
+        var cargo = JSON.stringify(cargo_array[i]);
+        console.log("the values fetched are:: " + cargo );
+    }
+    
+  
+   
+    
+
+    $('#otherss').modal('show');
+
+
+});
     
     function checkVIN(id){
         console.log("ID - > "+id);
@@ -639,8 +727,6 @@
         var Model = "#vin_model-"+serial[1];
         var ModelYear = "#vin_modelyear-"+serial[1];
         var Make = "#vin_make-"+serial[1];
-
-
         var endpointUrl = "https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/"+VINvalue+"?format=json";
         //"https://vpic.nhtsa.dot.gov/api/vehicles/decodevin/jt4jm11d6t0017325?format=json"
         $.ajax({
@@ -655,38 +741,31 @@
                     VIN_ModelYear : "",
                     VIN_Make : ""
                 }
-
                 //console.log("--> RESPONSE - > ",JSONdata);
                 $(VIN_details_div).css('display','inline');
-
                 //itterating for all resulted Variable and setting value of all desired Vehicle Variables
                 JSONdata.Results.forEach((object)=>{
                     if(object.Variable=="Error Code"){
                         VINdetails.VIN_ErrorValue = object.Value;
                         $(ErrorValue).val(VINdetails.VIN_ErrorValue);
                     }
-
                     if(object.Variable=="Manufacturer Name"){
                         VINdetails.VIN_Manufacturer = object.Value;
                         $(Manufacturer).val(VINdetails.VIN_Manufacturer);
                     }
-
                     if(object.Variable=="Model"){
                         VINdetails.VIN_Model = object.Value;
                         $(Model).val(VINdetails.VIN_Model);
                     }
-
                     if(object.Variable=="Model Year"){
                         VINdetails.VIN_ModelYear = object.Value;
                         $(ModelYear).val(VINdetails.VIN_ModelYear);
                     }
-
                     if(object.Variable=="Make"){
                         VINdetails.VIN_Make = object.Value;
                         $(Make).val(VINdetails.VIN_Make);
                     }
                 });
-
                 console.log("-> Vehicle VinDetails = ",VINdetails);
             },
             error:(jqXHR, textStatus, errorThrown)=>{
@@ -694,7 +773,6 @@
             }   
         })
     }
-
     function isOtherSelectedForSubType1(id){
         var serial = id.split("-");
         var typeVal = "#"+id;
@@ -706,7 +784,6 @@
             document.getElementById( 'sub_type-' + serial[1] ).style.display = 'none';   
         }
     }
-
     function isOtherSelectedForSubType2(id){
         var serial = id.split("-");
         var typeVal = "#"+id;
@@ -718,9 +795,6 @@
             document.getElementById( 'sub_sub_type-' + serial[1] ).style.display = 'none';   
         }
     }
-
-
-
     function createShipmentType(id){
         var serial = id.split("-");
         var typeVal = "#"+id;
@@ -805,12 +879,10 @@
                             price: "0"
                         },
                     ]
-
         $(subtypeDropdown1).html('');
         $(subtypeDropdown2).html('');
         $.each(types, function( index, typeValue ) {
           if($(typeVal).val()==typeValue.name){
-
             //console.log("> type value is - > ",$("#"+id).val());
             $.each(typeValue.subtype1, function( index1, subtype1) {
                 $(subtypeDropdown1).append($("<option />").val(subtype1).text(subtype1));
@@ -818,9 +890,7 @@
             $.each(typeValue.subtype2, function( index2, subtype2) {
                 $(subtypeDropdown2).append($("<option />").val(subtype2).text(subtype2));
             });
-
             $(shipmentCost).val(typeValue.price);
-
             if($(typeVal).val()=="Vehicle"){
                 $(VIN).css('display','inline');
             }
@@ -848,8 +918,9 @@
             document.getElementById( 'sub_sub_type-' + serial[1] ).style.display = 'none';
         }
     }
-
     window.cargosIndex = 0;
+    
+    
     function addprizes(ab){
         //alert("Working");
       //ab.disabled = true;
@@ -864,7 +935,6 @@
                               .removeAttr('id')
                               .attr('data-cargos-index', cargosIndex)
                               .insertBefore($template);
-
           // Update the name attributes
 /*         type
          subtype
@@ -891,12 +961,6 @@
               .find('[name="vin_manufacturer"]').attr('name', 'cargos[' + cargosIndex + '].vin_manufacturer').end()
               .find('[name="vin_model"]').attr('name', 'cargos[' + cargosIndex + '].vin_model').end()
               .find('[name="vin_modelyear"]').attr('name', 'cargos[' + cargosIndex + '].vin_modelyear').end()
-
-
-
-
-
-
           // Update the id attributes
           previousIndex = cargosIndex - 1 ; 
           $clone
@@ -914,7 +978,6 @@
               .find('[id="VINdiv"]').attr('id', 'VINdiv-' + cargosIndex).end()
               .find('[id="vehicle_id_no"]').attr('id', 'vehicle_id_no-' + cargosIndex).end()
               .find('[id="searchVINbtn"]').attr('id', 'searchVINbtn-' + cargosIndex).end()
-
               .find('[id="vinDetailsDiv"]').attr('id', 'vinDetailsDiv-' + cargosIndex).end()
               .find('[id="vin_error"]').attr('id', 'vin_error-' + cargosIndex).end()
               .find('[id="vin_make"]').attr('id', 'vin_make-' + cargosIndex).end()
@@ -923,7 +986,6 @@
               .find('[id="vin_modelyear"]').attr('id', 'vin_modelyear-' + cargosIndex).end()
               .find('[id="testDiv"]').attr('id', 'testDiv-' + cargosIndex).end()
               
-
           //ab.style.display = 'none';
           //ab = 'null';
           //addRanks();
@@ -939,7 +1001,6 @@
           console.log(hideButton);
           $(hideButton).css('display', 'block');
     }
-
     function removeprizes(btn)
     {
       var $row  = $(btn).parents('.form-group'),
