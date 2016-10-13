@@ -68,7 +68,8 @@ router.get('/delete_customer/:id', function (req, res, next){
 		req.flash('error', 'Please login first !');
 		res.redirect('/login');
 	}
-
+	//console.log("process exit()");
+	//process.exit();
 	CustomerCollection.findByIdAndRemove(req.params.id, function(error){
 		if(!error){
 			console.log(req.params.id+"____Removed Successfully.");
@@ -109,6 +110,7 @@ router.post('/update_customer', function (req, res, next){
 		res.redirect('/login');
 	}
 
+	console.log("the req.id is " +  req.query.id );
 	CustomerCollection.update(req.query.id, req.body, 
 		function (error, document){
 			if(error){

@@ -39,6 +39,7 @@
                                         <th>Sender ID</th>
                                         
                                         <th>Created By</th>
+                                        <th>Invoice</th>
                                         <th>Read</th>
                                         <th>Del</th>
                                     </tr>
@@ -51,8 +52,11 @@
                                         <tr class="gradeA">
                                             <td><%- shipmentList[index].name %></td>
                                             <td><%- shipmentList[index].for_journey.name %></td>
-                                            <td><%- shipmentList[index].sender.auto_generated_id %></td>
+                                            <td><%- shipmentList[index].sender.auto_generated_id + ", " + shipmentList[index].sender.first_name + " " + shipmentList[index].sender.last_name %></td>
                                             <td><%- shipmentList[index].created_by %></td>
+                                            <td>
+                                            <img src="../images/invoice_button.jpeg" id="invoice" value="<%-shipmentList[index]._id %>" style="height:40px; width:40px"/>
+                                            </td>
                                             <td>
                                                 <a href="/shipment/update_shipment?id=<%- shipmentList[index]._id %>"><img src="../images/updateicon.png" style="height:30px; width:30px"></a>
                                             </td>
@@ -142,6 +146,14 @@
             }
         });
     }
+
+    /*function openReader(id){
+        console.log("function working");
+    }*/
+    $("#invoice").click(function(){
+        console.log(this.value);
+     // what you wanted your button to do when user clicks it    
+ });
 </script>
 
 <% include footer %>

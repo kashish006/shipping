@@ -10,10 +10,18 @@ var Cargo = new Schema(
 {
 	cargoId: {type: String},
 	type: {type: String},
+	main_type: {type: String},
 	subtype: {type: String},
+	sub_type: {type: String},
 	sub_subtype: {type: String},
-	expected_cost_price: [{type: Number}],
+	sub_sub_type: {type: String},
+	expected_cost_price: {type: Number},
 	vehicle_id_no: {type: String},
+	vin_error: {type: String},
+	vin_make: {type: String},
+	vin_manufacturer: {type: String},
+	vin_model: {type: String},
+	vin_modelyear: {type: String},
 	value_added: {type: Number},
 	inspection_fee: {type: Number},
 	quantity: {type: Number},
@@ -30,6 +38,7 @@ var Shipment = new Schema(
 	was_orphan: {type: Boolean},  //back
 	/*If is_orphan is true hide for_journey dropdown*/
 	
+	is_sender: {type: Boolean},
 	for_journey:{type : Schema.Types.ObjectId, ref: 'Journey'},  //usr
 	/* In drop down show all journeyIds with status not started */
 	

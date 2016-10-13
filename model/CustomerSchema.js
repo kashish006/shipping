@@ -13,8 +13,12 @@ var Customer = new Schema(
 	first_name : String, 
 	last_name : String,
 	mobile_number : {type : Number, unique : true },
+	alternate_mobile_number : {type : Number, unique : true },
 	email : String,
 	address : String, 
+	address_city: String,
+	address_state: String,
+	address_zip: String,
 	comments : String, 
 	// All above fields will be present in the form for the user to Input values // 
 	

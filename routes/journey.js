@@ -9,7 +9,7 @@ router.get('/', function(req, res, next) {
 		req.flash('error', 'Please login first !');
 		res.redirect('/login');
 	}
-	JourneyCollection.find({},function(error, document){
+	JourneyCollection.find ({},function(error, document){
 		if(error){
 			console.log("> Getting error in JourneyCollection find query - > ", error);
 			throw error;
@@ -109,8 +109,9 @@ router.post('/update_journey', function (req, res, next){
 		req.flash('error', 'Please login first !');
 		res.redirect('/login');
 	}
-
-	JourneyCollection.update(req.query.id, req.body, 
+	console.log(req.query.id);
+	console.log("the journey details to be updated are " + JSON.stringify(req.body) );
+	JourneyCollection.update({_id: req.query.id}, req.body, 
 		function (error, document){
 			if(error){
 				console.log("> Getting Error in /update_journey POST - > ",error);
@@ -118,6 +119,7 @@ router.post('/update_journey', function (req, res, next){
 				res.redirect('/journey/');
 			}
 			else{
+				console.log("result of updated journey is " + JSON.stringify(document) );
 				req.flash('success', 'Journey updated successfully !!');
 				res.redirect('/journey/');
 			}

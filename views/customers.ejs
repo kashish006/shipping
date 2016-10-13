@@ -60,7 +60,7 @@
                                                 <a href="/customers/update_customer?id=<%- customerList[index]._id %>"><img src="../images/updateicon.png" style="height:30px; width:30px"></a><br/>
                                             </td>
                                             <td>    
-                                                <a href="/customers/delete_customer/<%- customerList[index]._id %>"><img src="../images/deleteicon.png" style="height:18px; width:18px" class="delete" data-confirm="Are you sure to delete this customer?"></a></td>
+                                                 <img src="../images/deleteicon.png" style="height:18px; width:18px" class="delete" data-confirm="Are you sure to delete this customer?"href="/customers/delete_customer/<%- customerList[index]._id %>"></td>
                                             </td>
                                         
                                         </tr>
@@ -117,6 +117,7 @@
             var choice = confirm(this.getAttribute('data-confirm'));
 
             if (choice) {
+                //console.log(this);
                 window.location.href = this.getAttribute('href');
             }
         });

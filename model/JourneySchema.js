@@ -46,6 +46,7 @@ Journey.method.details = function()
 Journey.method.create = function(  req )
 {
 	var jouneyObj = new Journey ({
+		name : req.body.name,
 		ship_id : req.body.ship_id,
 		source_port : req.body.source_port,
 		destination_port : req.body.destination_port,

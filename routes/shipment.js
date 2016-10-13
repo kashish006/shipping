@@ -55,8 +55,16 @@ router.get('/create', function(req, res, next) {
 					throw error2;
 				}
 				else{
-					res.render('shipment-create', {customerlist: customers, journeylist: journeys});
-				}
+					ShipmentCollection.find()
+      					.distinct('user_id')
+      					.count(function (err, count) 
+      					{
+      						console.log("the total number of shipments are " + count );
+      						++count;
+      						var shipmentName = "Inovice No.- " + count;
+          					res.render('shipment-create', {customerlist: customers, journeylist: journeys, shipmentName : shipmentName});   
+    	  				});
+					}
 			});
 		}
 	});
@@ -80,29 +88,65 @@ router.post('/post', multipartMiddleware, function(req, res, next) {
 			shipmentDetails.was_orphan = true;
 			shipmentDetails.for_journey = null;	
 		}
+		
 		shipmentDetails.created_by = req.session.user;
 		shipmentDetails.cash_collected_by = [req.session.user],
-		//console.log("> FINAL DETAILS - > ",shipmentDetails);
 		
-		ShipmentCollection.create(shipmentDetails, (error, resultxs) => {
-			if(error){
-				console.log("Error: Getting error in Creating Shipment - > ",error);
-				req.flash('error', 'Can not create this shipment !');
-				res.redirect("/shipment/create");
-			}else{
-				console.log("Success: Shipment added successfully - > ",result);
-				req.flash('success', 'Shipment created successfully !');
-				res.redirect("/shipment/");
-			}
+
+		assignSenderAsReceiver(shipmentDetails, function(shipmentDetails){
+			console.log("> FINAL DETAILS - > ",shipmentDetails);
+			//process.exit();
+			ShipmentCollection.create(shipmentDetails, (error, result)=>{
+				if(error){
+					console.log("Error: Getting error in Creating Shipment - > ",error);
+					req.flash('error', 'Can not create this shipment !');
+					res.redirect("/shipment/create");
+				}else{
+					console.log("Success: Shipment added successfully - > ",result);
+					req.flash('success', 'Shipment created successfully !');
+					res.redirect("/shipment/");
+				}
+			})
 		})
+				
 	})
 });
 
+function assignSenderAsReceiver(shipmentDetails, callback){
+	if(shipmentDetails.is_sender)
+	{
+		shipmentDetails.is_sender = true;
+		CustomerCollection.findById({_id: shipmentDetails.sender}, function (error, customer){
+			if(error){
+				console.log("Getting Error in /shipment/create customers");
+				throw error;
+			}
+			else{
+				console.log("the customer fetched is " + customer );
+				shipmentDetails.receiver_name = customer.first_name + " " + customer.last_name;
+				console.log(shipmentDetails.receiver_name );
+				shipmentDetails.receiver_contact = customer.mobile_number + " , " + customer.alternate_mobile_number;
+				shipmentDetails.receiver_address_line1 = customer.address;
+				shipmentDetails.receiver_address_city = customer.address_city;
+  				shipmentDetails.receiver_address_state = customer.address_state;
+  				shipmentDetails.receiver_address_zip = customer.address_zip;
+  				callback(shipmentDetails);
+			}
+		//console.log("process exit()");
+		//process.exit();
+		});
+	}
+	else{
+		callback(shipmentDetails);
+	}
+}
+
 function createCargo(shipment, callback){
 	console.log("--> SHIPMENTS ARE - > ",shipment);
+	
 	shipment.cargos.forEach((item, index)=>{
 		item.cargoId = shortid.generate();
-		item.expected_cost_price = [item.shipment_cost];
+		item.expected_cost_price = item.shipment_cost;
 		getBarcode(item.cargoId, (barcodeBuffer)=>{
 			item.barcode = {
 				data: barcodeBuffer,
