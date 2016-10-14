@@ -86,7 +86,7 @@
                                     <legend>Receiver Details</legend>
                                     <div class="form-group">
                                         <label>Name</label>
-                                        <input name="receiver_name" class="form-control">
+                                        <input name="receiver_name" class="form-control" id="receiver_name">
                                     </div> 
                                     <div class="form-group" id = "contact_number">
                                         <label>Contact Number</label>
@@ -398,11 +398,28 @@
                                                                     <div style="clear:both"></div>
                                                                     
                                                                     <div id="customer">
+                                                                <table id="extra">
+                                                                     <tr>
+                                                                        <td class="meta-head" id=>Shipment Name</td>
+                                                                        <td><p id="shipment_nam"></p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="meta-head" id=>Journey</td>
+                                                                        <td><p id ="journeys"></p></td>
+                                                                    </tr>
+                                                                    <tr>
                                                     
-                                                                <p id="customer-title"></p><br />
-                                                               <b>Journey:<p id ="journeys"></p></b></b><br />
-                                                              <b>  Sender:<p id="senders"></p></b> <br />
-                                                                <b> Reciever:<p id = "recievers"></p></b> 
+                                                                        <td class="meta-head">Sender</td>
+                                                                        <td><p id="senders"></p></td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <td class="meta-head">Receiver</td>
+                                                                        <td><p id = "receiver"></p></td>
+                                                                    </tr>
+                                                    
+                                                                </table>
+                                                                
+                                                               
                                                     
                                                                 <table id="meta">
                                                                     <tr>
@@ -426,11 +443,13 @@
                                                                     <table id="items">
                                                                     
                                                                       <tr>
-                                                                          <th>Type</th>
-                                                                          <th>Subtype1</th>
-                                                                          <th>SubType2</th>
+                                                                          <th>S.N</th>
+                                                                          <th>Cargo Description</th>
                                                                           <th>Quantity</th>
-                                                                          <th>Expected Price</th>
+                                                                          <th>Shipping Price</th>
+                                                                          <th>Value addition in Cost</th>
+                                                                          
+                                                                          
                                                                       </tr>
                                                                       
                                                                       <tr class="item-row">
@@ -617,9 +636,10 @@
        
        
        var shipment_costs = document.getElementById('shipment_cost-0').value;
+       var receivers = document.getElementById("receiver_name").value;
        
        
-        document.getElementById("customer-title").innerHTML = shipment;
+        document.getElementById("shipment_nam").innerHTML = shipment;
         document.getElementById("senders").innerHTML = sender_text;
         document.getElementById("journeys").innerHTML = journey_text;
         document.getElementById("types").innerHTML = type_text;
@@ -628,7 +648,7 @@
         document.getElementById("subtypes2").innerHTML = subtype2_text;
        document.getElementById("quantities").innerHTML = quantitys;
        document.getElementById("shipment_costss").innerHTML = shipment_costs;
-    
+        document.getElementById("receiver").innerHTML = receivers;
     // Code to fetch the cargos values created dynamically //
     console.log("cargos index " + cargosIndex);
     /*{
@@ -654,11 +674,42 @@
     for( i=0; i<=cargosIndex; i++)
     {
         cargo_object.type = document.getElementsByName('cargos['+i+'].type')[0].value;
+        cargo_object.subtype = document.getElementsByName('cargos['+i+'].subtype')[0].value;
+        cargo_object.sub_subtype = document.getElementsByName('cargos['+i+'].sub_subtype')[0].value;
+
+        // Values if user has selected "Others" for main , sub type OR sub sub type can be Undefine
+        cargo_object.main_type = document.getElementsByName('cargos['+i+'].main_type')[0].value;
+        cargo_object.sub_type = document.getElementsByName('cargos['+i+'].sub_type')[0].value;
+        cargo_object.sub_sub_type = document.getElementsByName('cargos['+i+'].sub_sub_type')[0].value;
+        cargo_object.shipment_cost = document.getElementsByName('cargos['+i+'].shipment_cost')[0].value;
+        cargo_object.vehicle_id_no = document.getElementsByName('cargos['+i+'].vehicle_id_no')[0].value;
+        cargo_object.vin_error = document.getElementsByName('cargos['+i+'].vin_error')[0].value;
+        cargo_object.vin_make = document.getElementsByName('cargos['+i+'].vin_make')[0].value;
+        cargo_object.vin_manufacturer = document.getElementsByName('cargos['+i+'].vin_manufacturer')[0].value;
+        cargo_object.vin_model = document.getElementsByName('cargos['+i+'].vin_model')[0].value;
+        cargo_object.vin_modelyear = document.getElementsByName('cargos['+i+'].vin_modelyear')[0].value;
+        cargo_object.value_added = document.getElementsByName('cargos['+i+'].value_added')[0].value;
+        cargo_object.inspection_fee = document.getElementsByName('cargos['+i+'].inspection_fee')[0].value;
+        cargo_object.quantity = document.getElementsByName('cargos['+i+'].quantity')[0].value;
+        
+        
         cargo_array.push(cargo_object);
         //console.log("the values fetched are " + cargo_array );
     }
-    console.log("the values fetched are " + cargo_array );
-    //$('#otherss').modal('show');
+    //console.log("the values fetched are " + cargo_array );
+   var a = JSON.stringify(cargo_array);
+    console.log("total array:: " + a );
+    for(i=0; i < cargo_array.length; i++)
+    {
+        var cargo = JSON.stringify(cargo_array[i]);
+        console.log("the values fetched are:: " + cargo );
+    }
+    
+  
+   
+    
+
+    $('#otherss').modal('show');
 
 
 });
