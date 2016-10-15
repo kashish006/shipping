@@ -55,7 +55,7 @@
                                             <td><%- shipmentList[index].sender.auto_generated_id + ", " + shipmentList[index].sender.first_name + " " + shipmentList[index].sender.last_name %></td>
                                             <td><%- shipmentList[index].created_by %></td>
                                             <td>
-                                            <img src="../images/invoice_button.jpeg" id="invoice" value="<%-shipmentList[index]._id %>" style="height:40px; width:40px"/>
+                                            <img src="../images/invoice_button.jpeg" id="invoice" value="<%-shipmentList[index]._id %>" onclick="printDiv('printableArea')" style="height:40px; width:40px"/>
                                             </td>
                                             <td>
                                                 <a href="/shipment/update_shipment?id=<%- shipmentList[index]._id %>"><img src="../images/updateicon.png" style="height:30px; width:30px"></a>
@@ -74,6 +74,113 @@
                             </table>
                         </div>
                         <!-- /.table-responsive -->
+			
+			<!-- Modal class start -->
+			
+			<div class="modal fade" id="printableArea" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+                                
+                                            <div class="modal-dialog" style="width:1000px" id="invoicess">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                         <h4 class="modal-title" id="myModalLabel">Invoice</h4>
+
+                                                    </div>
+                                                    <div class="modal-body">
+                                                                                                            
+                                                      <div id="page-wrap">
+
+                                                                    
+                                                                    
+                                                                    <header class="clearfix">
+							<div id="logo">
+							  <img src="../images/logo.png">
+							</div>
+							<div id="company">
+							  <h2 class="name">Harkham Shipping LLC</h2>
+							  <div>Miami-Miragoane, Haiti</div>
+							  <div>954-998-3505</div>
+							  <div><a href="mailto:company@example.com">company@example.com</a></div>
+							</div>
+							</div>
+						      </header>
+						      <main>
+							<div id="details" class="clearfix">
+							  <div id="client">
+							    <div class="to">INVOICE TO:</div>
+							    <h2 class="name"><p id = "receiver"></p></h2>
+							    <div class="address"><p id = "addressz"></p></div>
+							    <div class="email"><p id="contactzz"></p></div>
+							  </div>
+							  <br />
+							  
+							  <div id="invoice">
+							    <h1><p id="shipment_nam"></p></h1>
+							    <div class="date">Date of Invoice: 01/06/2014</div>
+							    <div class="journey"><p id = "journeys"></p></div>
+							    
+							  </div>
+							</div>
+							<div id="details" class="clearfix">
+							<div id="client">
+							    <div class="to"><b>Sender:</b></div>
+							    
+							    <div class="name"><p id = "senders"></p></div>
+							    
+							    
+							  </div>
+							</div>
+							<table border="0" cellspacing="0" cellpadding="0">
+							  <thead>
+							    <tr>
+							      <th class="no">#</th>
+							      <th class="desc">DESCRIPTION</th>
+							      <th class="unit">UNIT PRICE</th>
+							      <th class="qty">QUANTITY</th>
+							      <th class="total">TOTAL</th>
+							    </tr>
+							  </thead>
+							  <tbody>
+							    <tr>
+							      <td class="no"><p id="s_n"></p></td>
+							      <td class="desc"><b><p id = "typezz" ></p></b></td>
+							      
+							      <td class="unit"><p class="price" id="shipment_costzz"></p></td>
+							      <td class="qty"><p class="qty" id = "quantityzz"></p></td>
+							      <td class="total"><p id="total_shipment"></td>
+							    </tr>
+							    
+							    
+							  </tbody>
+							  <tfoot>
+							    
+							    <tr>
+							      <td colspan="2"></td>
+							      <td colspan="2">GRAND TOTAL</td>
+							      <td><p id ="grand_total"></p></td>
+							    </tr>
+							  </tfoot>
+							</table>
+							<div id="thanks">Thank you!</div>
+							
+						      </main>
+						      <footer>
+							Invoice was created on a computer and is valid without the signature and seal.
+						      </footer>
+                                                                                                            
+                                                                                                            
+                                                                                                        </div>
+                                                    <div class="modal-footer">
+                                                        
+                                                       
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>      
+			
+			<!-- Modal class end -->
+			
                     </div>
                     <!-- /.panel-body -->
                 </div>
@@ -110,6 +217,19 @@
         });
     });
 
+    function printDiv(divName) {
+     var printContents = document.getElementById(divName).innerHTML;
+     var originalContents = document.body.innerHTML;
+
+     document.body.innerHTML = printContents;
+
+     window.print();
+
+     document.body.innerHTML = originalContents;
+}
+
+    
+    
     function printBarcode(buffer){
         console.log("> barcode - > ", buffer);
         var params = {
