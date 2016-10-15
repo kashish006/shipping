@@ -86,7 +86,7 @@
                                     </div> 
                                     <div class="form-group" id = "contact_number">
                                         <label>Contact Number</label>
-                                        <input type="contact" name="receiver_contact" class="form-control">
+                                        <input type="contact" name="receiver_contact" class="form-control" id="contact_no">
                                     </div> 
 
                                     <div class="form-group">
@@ -95,30 +95,30 @@
                                       <!-- Text input-->
                                       <div class="form-group">
                                         <label>Address Line 1</label>
-                                          <input type="text" name="receiver_address_line1" placeholder="Address Line 1" class="form-control">
+                                          <input type="text" name="receiver_address_line1" placeholder="Address Line 1" class="form-control" id="address1">
                                       </div>
 
                                       <!-- Text input-->
                                       <div class="form-group">
                                         <label>Address Line 2</label>
-                                        <input type="text" name="receiver_address_line2" placeholder="Address Line 2" class="form-control">
+                                        <input type="text" name="receiver_address_line2" placeholder="Address Line 2" class="form-control" id="address2">
                                       </div>
 
                                       <!-- Text input-->
                                       <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
                                         <label>City</label>
-                                        <input type="text" name="receiver_address_city" placeholder="City" class="form-control">
+                                        <input type="text" name="receiver_address_city" placeholder="City" class="form-control" id="city">
                                       </div>
                                       
                                       <!-- Text input-->
                                       <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
                                         <label>State</label>
-                                        <input type="text" name="receiver_address_state" placeholder="State" class="form-control">
+                                        <input type="text" name="receiver_address_state" placeholder="State" class="form-control" id="state">
                                       </div>
 
                                       <div class="form-group col-sm-4" style="padding-right: 0px; padding-left: 0px">
                                         <label>Zip</label>  
-                                        <input type="text" name="receiver_address_zip" placeholder="Zip" class="form-control">
+                                        <input type="text" name="receiver_address_zip" placeholder="Zip" class="form-control" id="zip">
                                       </div>
                                     <legend></legend>
                                 </div>
@@ -371,110 +371,79 @@
 
                                                                     
                                                                     
-                                                                    <div id="identity">
-                                                                    
-                                                                <p id="address"><b>Harkham Shipping LLC <br />
-                                                                Miami-Miragoane, Haiti
-                                                                
-                                                                954-998-3505</b></p>
-                                                    
-                                                                <div id="logo">
-                                                    
-                                                                  
-                                                    
-                                                                  <div id="logohelp">
-                                                                    <input id="imageloc" type="text" size="50" value="" /><br />
-                                                                    (max width: 540px, max height: 100px)
-                                                                  </div>
-                                                                  <img id="image" src="../images/logo.png" alt="logo" />
-                                                                </div>
-                                                                    
-                                                                    </div>
-                                                                    
-                                                                    <div style="clear:both"></div>
-                                                                    
-                                                                    <div id="customer">
-                                                                <table id="extra">
-                                                                     <tr>
-                                                                        <td class="meta-head" id=>Shipment Name</td>
-                                                                        <td><p id="shipment_nam"></p></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="meta-head" id=>Journey</td>
-                                                                        <td><p id ="journeys"></p></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                    
-                                                                        <td class="meta-head">Sender</td>
-                                                                        <td><p id="senders"></p></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="meta-head">Receiver</td>
-                                                                        <td><p id = "receiver"></p></td>
-                                                                    </tr>
-                                                    
-                                                                </table>
-                                                                
-                                                               
-                                                    
-                                                                <table id="meta">
-                                                                    <tr>
-                                                                        <td class="meta-head">Invoice #</td>
-                                                                        <td><p>000123</p></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                    
-                                                                        <td class="meta-head">Date</td>
-                                                                        <td><p id="date">December 15, 2009</p></td>
-                                                                    </tr>
-                                                                    <tr>
-                                                                        <td class="meta-head">Total Amount</td>
-                                                                        <td>$<div  id ="total_shipment"></div></td>
-                                                                    </tr>
-                                                    
-                                                                </table>
-                                                                    
-                                                                    </div>
-                                                                    
-                                                                    <table id="items">
-                                                                    
-                                                                      <tr>
-                                                                          <th>S.N</th>
-                                                                          <th>Cargo Description</th>
-                                                                          <th>Quantity</th>
-                                                                          <th>Shipping Price</th>
-                                                                          <th>Value addition in Cost</th>
-                                                                          
-                                                                          
-                                                                      </tr>
-                                                                      
-                                                                      <tr class="item-row">
-                                                                          <td class="item-name"><p id="s_n"> </p></td>
-                                                                          <td class="description"><p id = "typezz"></p></td>
-                                                                          <td>$<span class="price" id="shipment_costzz"></span></td>
-                                                                          <td><p class="qty" id = "quantityzz"></p></td>
-                                                                          <td><p class="cost" id="value_addedzz"></p></td>
-                                                                      </tr>
-                                                                      
-                                                                      
-                                                                      
-                                                                      
-                                                                      <tr>
-                                                    
-                                                                          <td colspan="2" class="blank"> </td>
-                                                                          <td colspan="2" class="total-line">Total</td>
-                                                                          <td class="total-value">$<div id="total_shipment"></div></td>
-                                                                      </tr>
-                                                                      
-                                                                    
-                                                                    </table>
-                                                                    
-                                                                    <div id="terms">
-                                                                      <h5>Terms</h5>
-                                                                      <p>NET 30 Days. Finance Charge of 1.5% will be made on unpaid balances after 30 days.</p>
-                                                                    </div>
-                                                            
-                                                            </div>
+                                                                    <header class="clearfix">
+      <div id="logo">
+        <img src="../images/logo.png">
+      </div>
+      <div id="company">
+        <h2 class="name">Harkham Shipping LLC</h2>
+        <div>Miami-Miragoane, Haiti</div>
+        <div>954-998-3505</div>
+        <div><a href="mailto:company@example.com">company@example.com</a></div>
+      </div>
+      </div>
+    </header>
+    <main>
+      <div id="details" class="clearfix">
+        <div id="client">
+          <div class="to">INVOICE TO:</div>
+          <h2 class="name"><p id = "receiver"></p></h2>
+          <div class="address"><p id = "addressz"></p></div>
+          <div class="email"><p id="contactzz"></p></div>
+        </div>
+        <br />
+        
+        <div id="invoice">
+          <h1><p id="shipment_nam"></p></h1>
+          <div class="date">Date of Invoice: 01/06/2014</div>
+          
+        </div>
+      </div>
+      <div id="details" class="clearfix">
+      <div id="client">
+          <div class="to"><b>Sender:</b></div>
+          <div class="journey"><p id = "journeys"></p></div>
+          <div class="name"><p id = "senders"></p></div>
+          
+          
+        </div>
+      </div>
+      <table border="0" cellspacing="0" cellpadding="0">
+        <thead>
+          <tr>
+            <th class="no">#</th>
+            <th class="desc">DESCRIPTION</th>
+            <th class="unit">UNIT PRICE</th>
+            <th class="qty">QUANTITY</th>
+            <th class="total">TOTAL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="no"><p id="s_n"></p></td>
+            <td class="desc"><h3 id = "typezz" ></h3><p id = "sub_typezz"></p></td>
+            <td class="unit">$<span class="price" id="shipment_costzz"></span></td>
+            <td class="qty"><p class="qty" id = "quantityzz"></p></td>
+            <td class="total"><p id="total_shipment"></td>
+          </tr>
+          
+          
+        </tbody>
+        <tfoot>
+          
+          <tr>
+            <td colspan="2"></td>
+            <td colspan="2">GRAND TOTAL</td>
+            <td><p id ="grand_total"></p></td>
+          </tr>
+        </tfoot>
+      </table>
+      <div id="thanks">Thank you!</div>
+      
+    </main>
+    <footer>
+      Invoice was created on a computer and is valid without the signature and seal.
+    </footer>
                                                                                                             
                                                                                                             
                                                                                                         </div>
@@ -490,7 +459,7 @@
                                  <div class="form-group">
                                         <label>Total Amount</label>
                                         <div class="form-group input-group">
-                                            <input type="text" name="total_amount" class="form-control" id="total_shipment" readonly>
+                                            <input type="text" name="total_amount" class="form-control" id="grand_total" readonly>
                                             <span class="input-group-addon">.00</span>
                                         </div>
                                     </div>
@@ -606,31 +575,23 @@
        var journey = document.getElementsByName('for_journey')[0];
        var journey_text = journey.options[journey.selectedIndex].text;
        
-      /* var type_s = document.getElementsByName('cargos[0].type')[0];
-       
-       var type_text = type_s.options[type_s.selectedIndex].text;
-       
-       var type_0 = document.getElementsByName('type')[0];
-        var type_0_text = type_0.options[type_0.selectedIndex].text;
-        
-        var subtype1_s = document.getElementsByName('cargos[0].subtype')[0];
-       var subtype1_text = subtype1_s.options[subtype1_s.selectedIndex].text;
-       
-       var subtype2_s = document.getElementsByName('cargos[0].sub_subtype')[0];
-       var subtype2_text = subtype2_s.options[subtype2_s.selectedIndex].text;
-       
-      var quantitys = document.getElementById('cargo.quantity[0]').value;
-       
-       
-       var shipment_costs = document.getElementById('shipment_cost-0').value; */
+      
        var receivers = document.getElementById("receiver_name").value;
-       
+       var addresss1 = document.getElementById("address1").value;
+       var addresss2 = document.getElementById("address2").value;
+       var citys = document.getElementById("city").value;
+       var states = document.getElementById("state").value;
+       var zips = document.getElementById("zip").value;
+       var contacts = document.getElementById("contact_no").value;
        
        document.getElementById("shipment_nam").innerHTML = shipment;
         document.getElementById("senders").innerHTML = sender_text;
         document.getElementById("journeys").innerHTML = journey_text;
       
-        document.getElementById("receiver").innerHTML = receivers; 
+        document.getElementById("receiver").innerHTML = receivers;
+        document.getElementById("addressz").innerHTML = addresss1+","+addresss2+","+citys+","+states+ ","+zips;
+        document.getElementById("contactzz").innerHTML = contacts;
+        
     // Code to fetch the cargos values created dynamically //
     console.log("cargos index " + cargosIndex);
     /*{
@@ -681,7 +642,7 @@
     //console.log("the values fetched are " + cargo_array );
    var a = JSON.stringify(cargo_array);
     console.log("total array:: " + a );
-    var shipment_c = 0;
+    var grand_tot = 0;
     for(i=0; i < cargo_array.length; i++)
     {
        
@@ -692,17 +653,19 @@
        var value_addeds = cargo_array[i].value_added;
        var shipment_costz = cargo_array[i].shipment_cost;
        
-        shipment_c = parseInt(shipment_c) + parseInt(shipment_costz);
-        console.log(shipment_c);
-       //console.log(shipment_costz);
-       //console.log(value_addeds);
-       document.getElementById("s_n").innerHTML = i+1;
-       document.getElementById("typezz").innerHTML = types+"-"+subtypes+"-"+sub_subtypes;
+        //shipment_c =  parseInt(shipment_c) + parseInt(shipment_costz);
        
+         total_amts = parseInt(shipment_costz) * parseInt(quantityz);
+         grand_tot = parseInt(grand_tot) + parseInt(total_amts);
+       console.log(total_amts);
+       document.getElementById("s_n").innerHTML = i+1;
+       document.getElementById("typezz").innerHTML = types;
+       document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes;
         document.getElementById("quantityzz").innerHTML = quantityz;
-        document.getElementById("value_addedzz").innerHTML = value_addeds;
+       // document.getElementById("value_addedzz").innerHTML = value_addeds;
         document.getElementById("shipment_costzz").innerHTML = shipment_costz;
-        document.getElementById("total_shipment").innerHTML = shipment_c;
+        document.getElementById("total_shipment").innerHTML = "$"+total_amts;
+        document.getElementById("grand_total").innerHTML = "$"+grand_tot;
        // var cargo = JSON.stringify(cargo_array[i]);
         //console.log("the values fetched are:: " + cargo );
         
