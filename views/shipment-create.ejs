@@ -652,7 +652,9 @@
        var quantityz = cargo_array[i].quantity;
        var value_addeds = cargo_array[i].value_added;
        var shipment_costz = cargo_array[i].shipment_cost;
-       
+       var vin_iden = cargo_array[i].vehicle_id_no;
+       var vin_makes = cargo_array[i].vin_make;
+       var vin_manu = cargo_array[i].vin_manufacturer;
         //shipment_c =  parseInt(shipment_c) + parseInt(shipment_costz);
        
          total_amts = parseInt(shipment_costz) * parseInt(quantityz);
@@ -660,7 +662,7 @@
        console.log(total_amts);
        document.getElementById("s_n").innerHTML = i+1;
        document.getElementById("typezz").innerHTML = types;
-       document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes;
+       document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;
         document.getElementById("quantityzz").innerHTML = quantityz;
        // document.getElementById("value_addedzz").innerHTML = value_addeds;
         document.getElementById("shipment_costzz").innerHTML = shipment_costz;
