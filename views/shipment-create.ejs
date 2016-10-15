@@ -358,7 +358,8 @@
                                     <hr/>
                                     
                               <div class="modal fade" id="otherss" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
-                                            <div class="modal-dialog" style="width:1000px">
+                                
+                                            <div class="modal-dialog" style="width:1000px" id="invoicess">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
                                                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -396,13 +397,14 @@
         <div id="invoice">
           <h1><p id="shipment_nam"></p></h1>
           <div class="date">Date of Invoice: 01/06/2014</div>
+          <div class="journey"><p id = "journeys"></p></div>
           
         </div>
       </div>
       <div id="details" class="clearfix">
       <div id="client">
           <div class="to"><b>Sender:</b></div>
-          <div class="journey"><p id = "journeys"></p></div>
+          
           <div class="name"><p id = "senders"></p></div>
           
           
@@ -421,8 +423,9 @@
         <tbody>
           <tr>
             <td class="no"><p id="s_n"></p></td>
-            <td class="desc"><h3 id = "typezz" ></h3><p id = "sub_typezz"></p></td>
-            <td class="unit">$<span class="price" id="shipment_costzz"></span></td>
+            <td class="desc"><b><p id = "typezz" ></p></b></td>
+            
+            <td class="unit"><p class="price" id="shipment_costzz"></p></td>
             <td class="qty"><p class="qty" id = "quantityzz"></p></td>
             <td class="total"><p id="total_shipment"></td>
           </tr>
@@ -448,7 +451,8 @@
                                                                                                             
                                                                                                         </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" class="btn btn-default" data-dismiss="modal">OK</button>
+                                                        <button type="button" data-dismiss="modal" class="btn btn-default" id="close">Close</button>
+                                                       
                                                        
                                                     </div>
                                                 </div>
@@ -459,13 +463,13 @@
                                  <div class="form-group">
                                         <label>Total Amount</label>
                                         <div class="form-group input-group">
-                                            <input type="text" name="total_amount" class="form-control" id="grand_total" readonly>
+                                            <input type="text" name="total_amount" class="form-control" id="grand_total_amt" readonly>
                                             <span class="input-group-addon">.00</span>
                                         </div>
                                     </div>
                                
-                <input type="button" name="review" class="action-button btn btn-default" value="Review" id = "mybutt" />
-            
+                
+            <input type="button" name="review" class="action-button btn btn-default" value="Review" data-toggle="modal" id = "mybutt" />
                              </br>
                              &nbsp;
 <!------------------------------------------------------------------------------------------------------>
@@ -561,6 +565,9 @@
         })
     });
 
+    
+     window.cargo_object = new Object();
+    window.cargo_array = [];
     
     var cargo_array = [];
     $('#mybutt').click(function() {
@@ -661,27 +668,58 @@
          total_amts = parseInt(shipment_costz) * parseInt(quantityz);
          grand_tot = parseInt(grand_tot) + parseInt(total_amts);
        console.log(total_amts);
-       document.getElementById("s_n").innerHTML = i+1;
-       document.getElementById("typezz").innerHTML = types;
-       document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;
-        document.getElementById("quantityzz").innerHTML = quantityz;
+      
+       //document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;
+        //document.getElementById("quantityzz").innerHTML = quantityz;
        // document.getElementById("value_addedzz").innerHTML = value_addeds;
-        document.getElementById("shipment_costzz").innerHTML = shipment_costz;
-        document.getElementById("total_shipment").innerHTML = "$"+total_amts;
+        //document.getElementById("shipment_costzz").innerHTML = shipment_costz;
+        //document.getElementById("total_shipment").innerHTML = "$"+total_amts;
         document.getElementById("grand_total").innerHTML = "$"+grand_tot;
        // var cargo = JSON.stringify(cargo_array[i]);
         //console.log("the values fetched are:: " + cargo );
         
+        var itm = document.getElementById("s_n");
+        var cln = itm.cloneNode(true);
+        cln.innerHTML = i + 1;
+        document.getElementById("s_n").insertBefore(cln,itm[0]);
+        
+        var types_itm = document.getElementById("typezz");
+        var type_cln = types_itm.cloneNode(true);
+        type_cln.innerHTML = types+"-"+subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;;
+        document.getElementById("typezz").insertBefore(type_cln,types_itm[0]);
+        
+       
+     
+        var shipment_cost_itm = document.getElementById("shipment_costzz");
+        var shipment_cost_cln = shipment_cost_itm.cloneNode(true);
+        shipment_cost_cln.innerHTML = "$"+shipment_costz;
+        document.getElementById("shipment_costzz").insertBefore(shipment_cost_cln,shipment_cost_itm[0]);
+        
+        var quantity_itm = document.getElementById("quantityzz");
+        var quantity_cln = quantity_itm.cloneNode(true);
+        quantity_cln.innerHTML = quantityz;
+        document.getElementById("quantityzz").insertBefore(quantity_cln,quantity_itm[0]);
+        
+        
+        
+        var total_amount_itm = document.getElementById("total_shipment");
+        var total_amount_cln = total_amount_itm.cloneNode(true);
+        total_amount_cln.innerHTML = "$"+total_amts;
+        document.getElementById("total_shipment").insertBefore(total_amount_cln,total_amount_itm[0]);
+        
     }
-    
+    document.getElementById("grand_total_amt").innerHTML = "$"+grand_tot;
   
-   
+   console.log("Grand Total::"+grand_tot);
     
 
    $('#otherss').modal('show');
 
 
 });
+    
+    
+
     
     function checkVIN(id){
         console.log("ID - > "+id);
