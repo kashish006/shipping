@@ -561,11 +561,11 @@
         })
     });
 
-    window.cargo_object = new Object();
-    window.cargo_array = [];
+    
+    var cargo_array = [];
     $('#mybutt').click(function() {
         
-            
+        cargo_array = [];    
         console.log("my butt click function ");
 
 
@@ -616,6 +616,7 @@
 
     for( i=0; i<=cargosIndex; i++)
     {
+        var cargo_object = new Object();
         cargo_object.type = document.getElementsByName('cargos['+i+'].type')[0].value;
         cargo_object.subtype = document.getElementsByName('cargos['+i+'].subtype')[0].value;
         cargo_object.sub_subtype = document.getElementsByName('cargos['+i+'].sub_subtype')[0].value;
