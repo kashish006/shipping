@@ -1,4 +1,3 @@
-     
 
 <% include header %>
 
@@ -362,7 +361,7 @@
                                             <div class="modal-dialog" style="width:1000px" id="invoicess">
                                                 <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" id="closes">&times;</button>
                                                          <h4 class="modal-title" id="myModalLabel">Invoice</h4>
 
                                                     </div>
@@ -451,7 +450,7 @@
                                                                                                             
                                                                                                         </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" data-dismiss="modal" class="btn btn-default" id="close">Close</button>
+                                                        <button type="button" data-dismiss="modal" class="btn btn-default" id="closes">Close</button>
                                                        
                                                        
                                                     </div>
@@ -469,7 +468,7 @@
                                     </div>
                                
                 
-            <input type="button" name="review" class="action-button btn btn-default" value="Review" data-toggle="modal" id = "mybutt" />
+            <input type="button" name="review" class="action-button btn btn-default" value="Review" data-toggle="modal"  id = "mybutt" />
                              </br>
                              &nbsp;
 <!------------------------------------------------------------------------------------------------------>
@@ -570,7 +569,11 @@
     window.cargo_array = [];
     
     var cargo_array = [];
+    
+    
     $('#mybutt').click(function() {
+     
+  
         
         cargo_array = [];    
         console.log("my butt click function ");
@@ -667,13 +670,7 @@
        
          total_amts = parseInt(shipment_costz) * parseInt(quantityz);
          grand_tot = parseInt(grand_tot) + parseInt(total_amts);
-       console.log(total_amts);
-      
-       //document.getElementById("sub_typezz").innerHTML = subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;
-        //document.getElementById("quantityzz").innerHTML = quantityz;
-       // document.getElementById("value_addedzz").innerHTML = value_addeds;
-        //document.getElementById("shipment_costzz").innerHTML = shipment_costz;
-        //document.getElementById("total_shipment").innerHTML = "$"+total_amts;
+        console.log(total_amts);
         document.getElementById("grand_total").innerHTML = "$"+grand_tot;
        // var cargo = JSON.stringify(cargo_array[i]);
         //console.log("the values fetched are:: " + cargo );
@@ -714,12 +711,18 @@
     
 
    $('#otherss').modal('show');
+     
+    });
 
-
+$('#closes').click(function() {
+    document.getElementById("s_n").innerHTML = " ";
+    document.getElementById("typezz").innerHTML = " ";
+    document.getElementById("shipment_costzz").innerHTML = " ";
+    document.getElementById("quantityzz").innerHTML = " ";
+    document.getElementById("total_shipment").innerHTML =" ";
+    document.getElementById("grand_total_amt").innerHTML = " ";
+   
 });
-    
-    
-
     
     function checkVIN(id){
         console.log("ID - > "+id);
