@@ -395,7 +395,7 @@
         
         <div id="invoice">
           <h1><p id="shipment_nam"></p></h1>
-          <div class="date">Date of Invoice: 01/06/2014</div>
+          <div class="date"><p id = "spanDate"></p></div>
           <div class="journey"><p id = "journeys"></p></div>
           
         </div>
@@ -462,7 +462,7 @@
                                  <div class="form-group">
                                         <label>Total Amount</label>
                                         <div class="form-group input-group">
-                                            <input type="text" name="total_amount" class="form-control" id="grand_total_amt" readonly>
+                                            <input type="text" name="total_amount" class="form-control" id="grand_total_val" readonly>
                                             <span class="input-group-addon">.00</span>
                                         </div>
                                     </div>
@@ -657,6 +657,15 @@
     for(i=0; i < cargo_array.length; i++)
     {
        
+       
+      
+        
+       
+       
+       
+       
+        var typeValue = cargo_array[i].type + "- " + cargo_array[i].subtype + "- " + cargo_array[i].sub_subtype + "- " +
+        cargo_array[i].vehicle_id_no;
        var types = cargo_array[i].type;
        var subtypes = cargo_array[i].subtype;
        var sub_subtypes= cargo_array[i].sub_subtype;
@@ -666,7 +675,29 @@
        var vin_iden = cargo_array[i].vehicle_id_no;
        var vin_makes = cargo_array[i].vin_make;
        var vin_manu = cargo_array[i].vin_manufacturer;
-        //shipment_c =  parseInt(shipment_c) + parseInt(shipment_costz);
+        
+        if(cargo_array[i].type == "Others")
+        {
+            typeValue += cargo_array[i].main_type + "- " + cargo_array[i].sub_type + "- " + cargo_array[i].sub_sub_type;
+            
+            var other_types_itm = document.getElementById("typezz");
+        var other_type_cln = other_types_itm.cloneNode(true);
+        other_type_cln.innerHTML = typeValue;
+        document.getElementById("typezz").insertBefore(other_type_cln,other_types_itm[0]);
+        //console.log("typeValue::"+typeValue);
+            
+        }
+        if(cargo_array[i].subtype == "Others")
+        {
+            typeValue += cargo_array[i].sub_type + "- " ;
+            //console.log("Sub_type::"+typeValue);
+        }
+        if(cargo_array[i].sub_subtype == "Others")
+        {
+            typeValue += cargo_array[i].sub_sub_type + "- " ;
+           // console.log("sub_Sub_type::"+typeValue);
+        }
+        
        
          total_amts = parseInt(shipment_costz) * parseInt(quantityz);
          grand_tot = parseInt(grand_tot) + parseInt(total_amts);
@@ -680,10 +711,13 @@
         cln.innerHTML = i + 1;
         document.getElementById("s_n").insertBefore(cln,itm[0]);
         
-        var types_itm = document.getElementById("typezz");
+        if (!(cargo_array[i].type == "Others")) {
+            var types_itm = document.getElementById("typezz");
         var type_cln = types_itm.cloneNode(true);
-        type_cln.innerHTML = types+"-"+subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;;
+        type_cln.innerHTML = types+"-"+subtypes+"-"+sub_subtypes+" "+vin_iden+" "+vin_makes+" "+vin_manu;
         document.getElementById("typezz").insertBefore(type_cln,types_itm[0]);
+        
+        }
         
        
      
@@ -705,11 +739,19 @@
         document.getElementById("total_shipment").insertBefore(total_amount_cln,total_amount_itm[0]);
         
     }
-    document.getElementById("grand_total_amt").innerHTML = "$"+grand_tot;
-  
-   console.log("Grand Total::"+grand_tot);
     
+   console.log("Grand Total::"+grand_tot);
+   
+   document.getElementById("grand_total_val").value = "$"+grand_tot;
+    
+    //get current date on invoice
+    var months = ['January','February','March','April','May','June','July',
+    'August','September','October','November','December'];       
+    var tomorrow = new Date();
+    tomorrow.setTime(tomorrow.getTime() + (1000*3600*24));       
+    document.getElementById("spanDate").innerHTML = months[tomorrow.getMonth()] + " " + tomorrow.getDate()+ ", " + tomorrow.getFullYear();
 
+    //date section end
    $('#otherss').modal('show');
      
     });
@@ -720,7 +762,7 @@ $('#closes').click(function() {
     document.getElementById("shipment_costzz").innerHTML = " ";
     document.getElementById("quantityzz").innerHTML = " ";
     document.getElementById("total_shipment").innerHTML =" ";
-    document.getElementById("grand_total_amt").innerHTML = " ";
+    document.getElementById("grand_total_val").innerHTML = " ";
    
 });
     
@@ -1036,7 +1078,7 @@ $('#closes').click(function() {
 
 <!-- Metis Menu Plugin JavaScript -->
 <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
-<script src="../js/example.js" ></script>
+
 <!-- Morris Charts JavaScript -->
 <script src="../bower_components/raphael/raphael-min.js"></script>
 <script src="../bower_components/morrisjs/morris.min.js"></script>
